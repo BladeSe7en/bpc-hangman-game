@@ -1,7 +1,7 @@
 {
   "name": "vstda",
   "version": "0.1.0",
-  "description": "REACT100 Assignment - VSTDA",
+  "description": "bpc-hangman-game",
   "main": "server/index.js",
   "scripts": {
     "build": "npm run less && webpack",
@@ -64,7 +64,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/origincodeacademy/startnow-react100-vstda.git"
+    "url": "https://github.com/BladeSe7en/bpc-hangman-game.git"
   },
   "license": "MIT"
 }
