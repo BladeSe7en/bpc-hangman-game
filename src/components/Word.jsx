@@ -6,6 +6,7 @@ class Word extends Component {
   
       this.state = {
         currentGuess: '',
+
       };
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -15,6 +16,7 @@ class Word extends Component {
     
     handleChange(e) {
       this.setState({ currentGuess: e.target.value.toLowerCase() });
+      
     }
     handleSubmit() {
       this.props.handleSubmit(this.state.currentGuess);
@@ -136,7 +138,6 @@ class Word extends Component {
   
             {this.props.currentWord && this.props.currentWord.map(letter => {
               if (this.props.correctGuesses.includes(letter)) {
-                //instead of returning span, invoke that function that you created, and return that
                 return this.letterImg(letter)
               }
               return (' _ ');

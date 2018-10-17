@@ -15,16 +15,20 @@ class GamePage extends Component {
         letter            : '',
         strike            : 0,
         wrongGuessesLeft  : 6,
-        catagory          : ''
+        catagory          : '',
+        
       };
   
-      this.handleChange         = this.handleChange.bind(this);
-      this.handleClick         = this.handleClick.bind(this);
-      this.handleSubmit         = this.handleSubmit.bind(this);
+      this.handleChange    = this.handleChange.bind(this);
+      this.handleClick     = this.handleClick.bind(this);
+      this.handleSubmit    = this.handleSubmit.bind(this);
     }
   
     handleChange(e) {
-      this.setState({ catagory: e.target.value.toLowerCase() });
+      //this.setState({ catagory: e.target.value.toLowerCase() });
+      var localCatagory = e.target.value.toLowerCase();
+      this.props.handleStateCatagory(localCatagory);
+      console.log('this is localCatagory: ', localCatagory);
     }
   
     handleClick() {
@@ -43,6 +47,7 @@ class GamePage extends Component {
         //and it also updates the all guesses state by adding the current guess in the array
   
         if (this.props.currentWord.includes(currentGuess)) {
+            this.isGameOver();
           this.setState({
             allGuesses      : this.state.allGuesses.concat(currentGuess),
             correctGuesses  : this.state.correctGuesses.concat(currentGuess),
@@ -61,10 +66,27 @@ class GamePage extends Component {
   
     isGameOver(n) {
       console.log('testing isGameOver');
+      console.log('this is currentWord: ',   this.props.currentWord);
+      console.log('this is correctGuesses: ',this.state.correctGuesses);
       if (n == 6) {
         console.log('strike is at 6, should update state now');
+        this.props.handleStateDidYouWin(false);
         this.props.handleStateGameOver(true);
       }
+      var setWord = [...new Set(this.props.currentWord)];
+      var setCorrect = [...new Set(this.state.correctGuesses)];
+      console.log('this is setword: ',          setWord);
+      console.log('this is setCorrect: ',       setCorrect);
+      console.log('this is setword.length: ',   setWord.length);
+      console.log('this is setCorrect.length: ',setCorrect.length);
+
+     
+     if (setWord.length-1 == setCorrect.length) {
+        console.log('currentWord is now equal to correctGuesses');
+         this.props.handleStateGameOver(true);
+         this.props.handleStateDidYouWin(true);
+        } 
+      
     }
   
   
@@ -192,9 +214,9 @@ class GamePage extends Component {
               {img}
             </div>
             <Word
-              correctGuesses={this.state.correctGuesses}
-              currentWord={this.props.currentWord}
-              handleSubmit={this.handleSubmit}
+              correctGuesses    = {this.state.correctGuesses}
+              currentWord       = {this.props.currentWord}
+              handleSubmit      = {this.handleSubmit}
             />
           </div >
   
@@ -204,3 +226,5 @@ class GamePage extends Component {
     }
 
     export default GamePage;
+
+   

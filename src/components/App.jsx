@@ -13,20 +13,24 @@ export default class MainPage extends Component {
       currentGuess      : [],
       currentWord       : [],
       data              : [],
+      didYouWin         : false,
+      letter            : '',
+      isGameOver        : false,
       isGameShowing     : false,
       isMainPageShowing : true,
-      isScoreShowing    : false,
       isScorePage        : false,
-      letter            : '',
-      isGameOver        : false
+      isScoreShowing    : false,
+      strike            : 0
     };
 
-    this.handleClick         = this.handleClick.bind(this);
-    this.currentWord         = this.currentWord.bind(this);
-    this.handleChange        = this.handleChange.bind(this);
-    this.handleStateGameOver = this.handleStateGameOver.bind(this);
-    this.handleStateWord     = this.handleStateWord.bind(this);
-
+    this.currentWord               = this.currentWord.bind(this);
+    this.handleChange              = this.handleChange.bind(this);
+    this.handleClick               = this.handleClick.bind(this);
+    this.handleStateCatagory       = this.handleStateCatagory .bind(this);
+    this.handleSameCatagoryNewWord = this.handleSameCatagoryNewWord .bind(this);
+    this.handleStateDidYouWin      = this.handleStateDidYouWin.bind(this);
+    this.handleStateGameOver       = this.handleStateGameOver.bind(this);
+    this.handleStateWord           = this.handleStateWord.bind(this);
   }
   
   handleClick() {
@@ -58,6 +62,23 @@ export default class MainPage extends Component {
       response.send(err);
     });
   }
+
+  sameCatagoryNewWord() {
+    var index = Math.floor(Math.random() * this.state.data.length);
+    console.log('this is index: ', index);
+    console.log('this is data: ', this.state.data[index]);
+    console.log('this is length: ', this.state.data.length);
+    this.setState({
+      allGuesses        : [],
+      correctGuesses    : [],
+      isGameOver        : false,
+      letter            : '',
+      strike            : 0,
+      wrongGuessesLeft  : 6,
+    });
+    this.setState({isGameOver: false});
+    this.setState({currentWord: ( this.state.data[index].word.split('') )});
+  }
   
   handleChange(e) {
     this.setState({ catagory: e.target.value.toLowerCase() });
@@ -66,57 +87,76 @@ export default class MainPage extends Component {
   handleStateWord(word)  {
     console.log('this is word: ',word);
     this.setState({currentWord: word});
-    console.log('this is currentword after setState: ',this.state.currentWord);
   }
 
   handleStateGameOver(boolean)  {
     console.log('this is GameOver: ',boolean);
     this.setState({isGameOver: boolean});
-    console.log('this is isGameOver after setState: ',this.state.isGameOver);
+  }
+
+  handleStateDidYouWin(boolean)  {
+    console.log('Did You Win: ',boolean);
+    this.setState({didYouWin: boolean});
+  }
+
+  handleStateCatagory(word)  {
+    console.log('this is catagory: ',word);
+    this.currentWord(word);
+  }
+
+  handleSameCatagoryNewWord(word)  {
+    console.log('this is sameCatagoryNewWord: ',word);
+    this.sameCatagoryNewWord(word);
   }
 
   render() {
-    const currentWord = this.state.currentWord;
-    if (!this.state.isMainPageShowing) {
-
-      if (this.state.isGameOver === true ) {
+    if (this.state.isMainPageShowing === false) {
+        if (this.state.isGameOver === true) {
         return (
           <ScorePage
-            handleStateWord      = {this.handleStateWord}
-            handleStateGameOver  = {this.handleStateGameOver}
-            isGameOver           = {this.state.isGameOver}
-            data                 = {this.state.data}
-            currentWord          = {currentWord}
+            changeCurrentWord         = {this.currentWord}
+            currentWord               = {this.state.currentWord}
+            didYouWin                 = {this.state.didYouWin}
+            handleChange              = {this.handleChange}
+            handleStateCatagory       = {this.handleStateCatagory}
+            handleSameCatagoryNewWord = {this.handleSameCatagoryNewWord}
+            handleStateGameOver       = {this.handleStateGameOver}
+            handleStateWord           = {this.handleStateWord}
+            isGameOver                = {this.state.isGameOver}
+            // strike                    = {this.state.strke}
           />)
         
       } else {
         return (   
             <GamePage
-          currentWord         = {currentWord}
-          data                = {this.state.data}
-          handleCurrentWord   = {this.handleCurrentWord}
-          handleStateGameOver = {this.handleStateGameOver}
+            currentWord          = {this.state.currentWord}
+            data                 = {this.state.data}
+            handleCurrentWord    = {this.handleCurrentWord}
+            handleStateCatagory  = {this.handleStateCatagory}
+            handleStateDidYouWin = {this.handleStateDidYouWin}
+            handleStateGameOver  = {this.handleStateGameOver}
               />
          )
 
        }
-    }
-            
+    
+    } else {       
     return (
-      <div className="card-body">
-        <div className="card">
-          <img id="hangman-title-img" src="https://occ-0-901-1001.1.nflxso.net/art/87e01/5694568c69ef4be79164f46b967e7f4c1a387e01.png" />
-          <h1 className="title">Instructions</h1>
-          <p className="rules">The objective is simple. You must guess your word correctly before the full charactor is drawn. On the 6th wrong answer you will lose. At the cost of one move you may click the hint button to recieve a clue about the word </p>
-          <p>To begin, please enter in a catagory.</p>
-        </div>
-        <button className="btn" onClick={this.handleClick}>start game</button>
-        <input
-          className ="catagory"
-          value     ={this.state.catagory}
-          onChange  ={this.handleChange} />
+        <div className="card-body">
+          <div className="card">
+            <img id="hangman-title-img" src="https://occ-0-901-1001.1.nflxso.net/art/87e01/5694568c69ef4be79164f46b967e7f4c1a387e01.png" />
+            <h1 className="title">Instructions</h1>
+            <p className="rules">The objective is simple. You must guess your word correctly before the full charactor is drawn. On the 6th wrong answer you will lose. At the cost of one move you may click the hint button to recieve a clue about the word </p>
+            <p>To begin, please enter in a catagory.</p>
+          </div>
+          <button className="btn" onClick={this.handleClick}>start game</button>
+          <input
+            className ="catagory"
+            value     ={this.state.catagory}
+            onChange  ={this.handleChange} />
 
-      </div>
-    )
+        </div>
+      )
+   }
   }
 }
