@@ -32,6 +32,9 @@
     "nightmare-react-utils": "^1.0.4",
     "react": "^15.6.2",
     "react-dom": "^15.3.2",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.1",
+    "redux-promise-middleware": "^5.1.1",
     "serve-favicon": "^2.5.0",
     "webpack": "^3.6.0"
   },
@@ -39,6 +42,7 @@
     "axios-mock-adapter": "^1.6.1",
     "babel": "^6.3.26",
     "babel-loader": "^7.1.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-airbnb": "^1.0.1",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.4.3",
