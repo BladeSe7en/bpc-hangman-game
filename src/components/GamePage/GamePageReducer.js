@@ -11,7 +11,6 @@ const initalstate = {
   };
 
   function GamePageReducer(state = initalstate, action) {
-    console.log('hello from reducer')
   const { type, payload } = action;
   switch (type) {
       case 'UPDATE_ALL_GUESSES':

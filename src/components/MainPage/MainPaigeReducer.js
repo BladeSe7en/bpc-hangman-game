@@ -3,11 +3,11 @@ const initalstate = {
     currentWord       : [],
     data              : [],
     isGameShowing     : false,
+    isItTwoPlayer     : false,
     isMainPageShowing : true,
   };
   
-  function AppReducer(state = initalstate, action) {
-      console.log('hello from reducer');
+  function MainPageReducer(state = initalstate, action) {
     const { type, payload } = action;
 
     switch (type) {
@@ -26,6 +26,11 @@ const initalstate = {
       return {
           ...state,
           isMainPageShowing: payload
+      }
+      case 'UPDATE_IS_IT_TWO_PLAYER':
+      return {
+          ...state,
+          isItTwoPlayer: payload
       }
       case 'UPDATE_CURRENT_WORD':
       return {
@@ -46,4 +51,4 @@ const initalstate = {
     }
   }
   
-  export default AppReducer;
+  export default MainPageReducer;

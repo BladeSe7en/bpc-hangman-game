@@ -1,3 +1,15 @@
+.all-guesses {
+  right: 20%;
+  top: 25%;
+  }
+  .all-guesses-player2 {
+    position: absolute;
+    text-align: center;
+    top: 1%;
+    right: 0;
+    left: 0;
+    margin: auto;
+    }
  body {
   background: #136a8a;
   background: -webkit-linear-gradient(to left, #bdc3c7, #2c3e50);
@@ -11,6 +23,17 @@
   font-size: 40px;
   color: rgb(204, 32, 32);
 }
+.btn {
+  size: 30px;
+  background-color: rgb(204, 32, 32);
+  color: white;
+}
+.btn-two-Player {
+  size: 30px;
+  background-color: rgb(204, 32, 32);
+  color: white;
+  width: 100%;
+}
 .btn-primary {
   color: #fff;
   background-color: #2c3e50;
@@ -21,18 +44,60 @@
   background-color: #02151a;
   border-color: #285e8e; /*set the color you want here*/
 }
-.btn {
-  size: 30px;
-  background-color: rgb(204, 32, 32);
+.card-body {
+  justify-content: center;
   color: white;
-  size: 40px;
+}
+.catagory {
+  color: black;
+}
+.center {
+  text-align: center;
+}
+.defeat {
+  position: relative;
+  margin: auto;
+  background-color: rgba(255, 255, 255, 0.247);
+  border: solid 5px rgb(204, 32, 32);
+}
+#guess {
+  bottom: 10px;
+}
+.guesses-left {
+  top: 20px;
+  left: 28%;
+  }
+.hangman {
+  height: 65vh;
+  padding: 10%;
 }
 
-.hangman {
-  height: 90vh;
-
+.hangman img {
+  max-width: 100%;
+}
+.hangman-title-img {
+  padding: 20px;
+}
+input {
+  font-size: 20px;
+  text-align: center;
+}
+.image-title-player2 {
+position: absolute;
+text-align: center;
+right: 0;
+left: 0;
+margin: auto;
+}
+img#title-2 {
+  position: absolute;
+  right: 0;
 }
 #letter-box {
+  .letter {
+    max-width: 50px;
+    max-height: 50px;
+  }
   position: relative;
   bottom: 5%;
   padding-bottom: 20px;
@@ -42,8 +107,18 @@
   border-width: 10px;
   box-shadow: 10px 10px black;
 }
-#guess {
-  bottom: 10px;
+.name {
+  font-family: 'Rock Salt', cursive;
+}
+.player1 {
+  background: linear-gradient(to left, #bdc3c7, #0c6bca);
+}
+.player2 {
+  background: linear-gradient(to right, #bdc3c7, #24c210);
+}
+
+.row {
+   width: 100%;
 }
 textarea {
   width: 100%;
@@ -51,57 +126,20 @@ textarea {
   min-height: 8em;
   max-height: 16em;
 }
-.card-body {
-  justify-content: center;
-  color: white;
-}
+
 .title .rules {
   justify-content: center;
   color: red;
   padding: 20px;
 }
-
-.hangman-title-img {
-  padding: 20px;
-}
-
 #title-2 {
  float: right;
  padding: 50px 300px;
-}
-img#title-2 {
-  position: absolute;
-  right: 0;
 }
 .word-section {
   bottom: 0px;
   height: 20%;
   width: 100%;
   border-color: black;
-}
-.letter {
-  max-width: 50px;
-  max-height: 50px;
-}
-.all-guesses {
-  position: absolute;
-right: 20%;
-top: 25%;
-}
-.catagory {
-  color: black;
-}
-.name {
-font-family: 'Rock Salt', cursive;
-}
-.guesses-left {
-position: absolute;
-top: 20px;
-left: 28%;
-}
-.defeat {
-  position: relative;
-  margin: auto;
-  background-color: rgba(255, 255, 255, 0.247);
-  border: solid 5px rgb(204, 32, 32);
+  text-align: center;
 }

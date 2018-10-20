@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 var axios = require('axios');
 
 class ScorePage extends Component {
@@ -34,7 +35,9 @@ class ScorePage extends Component {
             dispatch({ type: 'UPDATE_IS_SCORE_PAGE_SHOWING', payload: false });
             dispatch({ type: 'UPDATE_LETTER'               , payload: [] });
             dispatch({ type: 'UPDATE_STRIKE'               , payload: 0 });
+            dispatch({ type: 'UPDATE_TURN'                 , payload: true});
             dispatch({ type: 'UPDATE_WRONG_GUESSES_LEFT'   , payload: 6 });
+
           } 
         )
         .catch((err) => {
@@ -59,7 +62,10 @@ class ScorePage extends Component {
         dispatch({ type: 'UPDATE_IS_SCORE_PAGE_SHOWING', payload: false });
         dispatch({ type: 'UPDATE_LETTER'               , payload: [] });
         dispatch({ type: 'UPDATE_STRIKE'               , payload: 0 });
+        dispatch({ type: 'UPDATE_TURN'                 , payload: true});
+        dispatch({ type: 'UPDATE_T'                 , payload: true});
         dispatch({ type: 'UPDATE_WRONG_GUESSES_LEFT'   , payload: 6 });
+
     }
     
     handleClick() {
@@ -104,15 +110,19 @@ class ScorePage extends Component {
                         <div>
                         <h1>Congratulations you won! WOULD YOU LIKE TO TRY AGAIN?</h1>
                         </div>
-                        <button className="btn" onClick={this.sameCatNewWord}>SAME CATAGORY</button>
+                        <Link to="/GamePage">
+                        <button className="btn" onClick={this.sameCatagoryNewWord}>SAME CATAGORY</button>
+                        </Link>
                         <input
                             className="catagory"
                             placeholder="new catagory"
                             value={this.props.catagory}
                             onChange={this.handleChange} />
+                        <Link to="/GamePage">
                         <button className="btn" onClick={this.handleClick}>NEW CATAGORY</button>
+                        </Link>
                         <h3>You guessed {this.props.currentWord} correctly.</h3>
-                        <div classname='row'>
+                        <div className='row'>
                             <div className='hangman'>
                             {img}
                             </div>
@@ -127,13 +137,17 @@ class ScorePage extends Component {
                     <div>
                         <h1>GAME OVER! WOULD YOU LIKE TO TRY AGAIN?</h1>
                     </div>
+                    <Link to="/GamePage">
                     <button className="btn" onClick={this.sameCatagoryNewWord}>SAME CATAGORY</button>
+                    </Link>
                     <input
                         className="catagory"
                         placeholder="new catagory"
-                        value={this.props.catagory}
+                        
                         onChange={this.handleChange} />
+                    <Link to="/GamePage">
                     <button className="btn" onClick={this.handleClick}>NEW CATAGORY</button>
+                    </Link>
                     <h3>The word was {this.props.currentWord}.</h3>
                 </div>
             )}

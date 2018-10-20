@@ -10,7 +10,6 @@ function mapStoreToProps(store){
         isScoreShowing    : store.GamePage.isScoreShowing,
         strike            : store.GamePage.strike,
         wrongGuessesLeft  : store.GamePage.wrongGuessesLeft
-
     };
 }
 

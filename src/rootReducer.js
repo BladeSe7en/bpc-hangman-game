@@ -1,15 +1,15 @@
-import { combineReducers } from 'redux';
-import AppReducer from './components/App/AppReducer';
-import GamePageReducer from './components/GamePage/GamePageReducer';
-import ScorePageReducer from './components/ScorePage/ScorePageReducer';
-import WordReducer from './components/Word/WordReducer';
+import { combineReducers }  from 'redux';
+import MainPageReducer      from './components/MainPage/MainPaigeReducer';
+import GamePageReducer      from './components/GamePage/GamePageReducer';
+import ScorePageReducer     from './components/ScorePage/ScorePageReducer';
+import WordReducer          from './components/Word/WordReducer';
 
 const rootReducer = combineReducers({
-   App          : AppReducer,
+   MainPage    : MainPageReducer,
    GamePage    : GamePageReducer,
-   ScorePage    : ScorePageReducer,
-   Word         : WordReducer
+   ScorePage   : ScorePageReducer,
+   Word        : WordReducer
 
 });
 
-export default rootReducer;
+export default rootReducer; 

@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import Word from '../Word';
+
 var axios = require('axios');
 
 class GamePage extends Component {
     constructor(props) {
       super(props);
-      this.letterImg    = this.letterImg.bind(this);
+      this.letterImg = this.letterImg.bind(this);
     }
-  
-   
   
     letterImg(letter) {
         if (letter.toLowerCase() === "a") {
@@ -111,14 +110,13 @@ class GamePage extends Component {
         if (this.props.strike === 6) {
           img = <img id="hangman-6" src="https://media.discordapp.net/attachments/374257557880963072/492879053070532618/hangman-6.png" />
         }
-        const {wrongGuessesLeft} = this.props;
+        
         return (
           <div>
             <div>
               <img id="title-2" src="https://cdn.discordapp.com/attachments/374257557880963072/492551101883875349/title2.png" />
               <div className="all-guesses">
                 {this.props.allGuesses && this.props.allGuesses.map(letter => {
-                  console.log('this is letter from inside the map: ', letter)
                   return this.letterImg(letter)
                 })}
 
@@ -126,7 +124,7 @@ class GamePage extends Component {
               </div>
             </div>
             <div className='guesses-left'>
-             <h1>strikes left: {wrongGuessesLeft}</h1>
+             <h1>strikes left: {this.props.wrongGuessesLeft}</h1>
             </div>
   
             <div className="hangman">
