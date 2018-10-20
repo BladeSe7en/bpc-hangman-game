@@ -9,7 +9,7 @@ const initalstate = {
     isScoreShowing    : false,
     letter            : '',
     player1Turn       : true,
-    player2WrongGuess : 6,
+    player2WrongGuesses : 6,
     player2Strike     : 0,
     strike            : 0,
     wrongGuessesLeft  : 6,
@@ -104,7 +104,7 @@ const initalstate = {
         case 'UPDATE_PLAYER2_WRONG_GUESSES':
         return {
             ...state,
-            player2WrongGuess: payload
+            player2WrongGuesses: payload
         }
       case 'UPDATE_WRONG_GUESSES_LEFT':
       return {

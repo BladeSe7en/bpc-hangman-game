@@ -10,7 +10,6 @@ class Word extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this); 
     this.isGameOver   = this.isGameOver.bind(this);
-    this.letterImg    = this.letterImg.bind(this);
   }
   
   enter(e) {
@@ -42,8 +41,9 @@ class Word extends Component {
       else {
         if (this.props.isItTwoPlayer === true && !this.props.player1Turn && !this.props.currentWord.includes(currentGuess)) { 
           console.log('hello from player 2 wrong guess')
-            dispatch({ type: 'UPDATE_PLAYER2_STRIKE'        , payload: this.props.strike + 1 });
-            dispatch({ type: 'UPDATE_PLAYER2_WRONG_GUESSES' , payload: (+(this.props.player2WrongGuess) - 1) });
+          this.isGameOver( this.props.player2Strike + 1);
+            dispatch({ type: 'UPDATE_PLAYER2_STRIKE'        , payload: this.props.player2Strike + 1 });
+            dispatch({ type: 'UPDATE_PLAYER2_WRONG_GUESSES' , payload: (+(this.props.player2WrongGuesses) - 1) });
         }
         else {
           this.isGameOver( this.props.strike + 1);
@@ -81,119 +81,19 @@ class Word extends Component {
         const { dispatch } = this.props;
          dispatch({ type: 'UPDATE_IS_GAME_OVER'         , payload: true});
          dispatch({ type: 'UPDATE_DID_YOU_WIN'          , payload: true});
-        } 
+        }
+
     }
    
-
-    letterImg(letter) {
-      if (letter.toLowerCase() === "a") {
-        return "A";
-      }
-      if (letter.toLowerCase() === "b") {
-        return 'B';
-      }
-      if (letter.toLowerCase() === "c") {
-        return 'C';
-      }
-      if (letter.toLowerCase() === "d") {
-        return 'D';
-      }
-      if (letter.toLowerCase() === "e") {
-        return 'E';
-      }
-      if (letter.toLowerCase() === "f") {
-        return 'F';
-      }
-      if (letter.toLowerCase() === "g") {
-        return 'G';
-      }
-      if (letter.toLowerCase() === "h") {
-        return 'H';
-      }
-      if (letter.toLowerCase() === "i") {
-        return 'I';
-      }
-      if (letter.toLowerCase() === "j") {
-        return 'J';
-      }
-      if (letter.toLowerCase() === "k") {
-        return 'K';
-      }
-      if (letter.toLowerCase() === "l") {
-        return 'L';
-      }
-      if (letter.toLowerCase() === "m") {
-        return 'M';
-      }
-      if (letter.toLowerCase() === "n") {
-        return 'N';
-      }
-      if (letter.toLowerCase() === "o") {
-        return 'O';
-      }
-      if (letter.toLowerCase() === "p") {
-        return 'P';
-      }
-      if (letter.toLowerCase() === "q") {
-        return 'Q';
-      }
-      if (letter.toLowerCase() === "r") {
-        return 'R';
-      }
-      if (letter.toLowerCase() === "s") {
-        return 'S';
-      }
-      if (letter.toLowerCase() === 't') {
-        return 'T';
-      }
-      if (letter.toLowerCase() === "u") {
-        return 'U';
-      }
-      if (letter.toLowerCase() === "v") {
-        return 'V';
-      }
-      if (letter.toLowerCase() === "w") {
-        return 'W';
-      }
-      if (letter.toLowerCase() === "x") {
-        return 'X';
-      }
-      if (letter.toLowerCase() === "y") {
-        return 'Y';
-      }
-      if (letter.toLowerCase() === "z") {
-        return 'Z';
-      }
-    }
-
     render() {
       if (this.props.isGameOver === true) {
         return <Redirect push to="/ScorePage" />;
       }
-     var img = <img id="hangman-0" src="https://cdn.discordapp.com/attachments/374257557880963072/492878824501936149/hangman-0.png" />;
-      if (this.props.strike === 1) {
-        img = <img id="hangman-1" src="https://media.discordapp.net/attachments/374257557880963072/492878854529089547/hangman-1.png" />
-      }
-      if (this.props.strike === 2) {
-        img = <img id="hangman-2" src="https://media.discordapp.net/attachments/374257557880963072/492878881896923150/hangman-2.png" />
-      }
-      if (this.props.strike === 3) {
-        img = <img id="hangman-3" src="https://media.discordapp.net/attachments/374257557880963072/492878930995576832/hangman-3.png" />
-      }
-      if (this.props.strike === 4) {
-        img = <img id="hangman-4" src="https://media.discordapp.net/attachments/374257557880963072/492878991133376523/hangman-4.png" />
-      }
-      if (this.props.strike === 5) {
-        img = <img id="hangman-5" src="https://media.discordapp.net/attachments/374257557880963072/492879021600669716/hangman-5.png" />
-      }
-      if (this.props.strike === 6) {
-        img = <img id="hangman-6" src="https://media.discordapp.net/attachments/374257557880963072/492879053070532618/hangman-6.png" />
-      }
       if (this.props.isItTwoPlayer === true) {
         return (
-          <div className="word-section row">
+          <div className="word-section row" >
 
-            <div className="col-md-3 player1" style={this.props.player1Turn ? { display: 'block' } : { display: 'none' }}>
+            <div className="col-md-3" style={this.props.player1Turn ? { display: 'block' } : { display: 'none' }}>
               <h1 className="enter-a-guess"></h1>
               <input id='guess player-1'
                 type="string"
@@ -204,19 +104,18 @@ class Word extends Component {
                 onKeyDown={this.enter}
                 maxLength={1} />
             </div>
-            
-           
 
             <div className="col-md-6 container center">
               <div className='row'>
                 <div className="col-12">
                   {this.props.currentWord && this.props.currentWord.map(letter => {
                     if (this.props.correctGuesses.includes(letter)) {
-                      return this.letterImg(letter)
+                      return letter.toUpperCase();
                     }
                     return (' _ ');
                   })}
                 </div>
+
                 <div className="row">
                   <div className="col-md-12 ">
                     <button
@@ -228,9 +127,9 @@ class Word extends Component {
               </div>
             </div>
 
-            <div className="col-md-3 player2" style={!this.props.player1Turn ? { display: 'block' } : { display: 'none' }}>
+            <div className="col-md-3" style={!this.props.player1Turn ? { display: 'block' } : { display: 'none' }}>
               <h1 className="enter-a-guess-player-2"></h1>
-              <input id='guess player-2'
+              <input id='guess'
                 type="string"
                 placeholder="Enter in a Guess"
                 value={this.props.currentGuess}
@@ -258,7 +157,7 @@ class Word extends Component {
               >Enter Guess </button>
               {this.props.currentWord && this.props.currentWord.map(letter => {
                 if (this.props.correctGuesses.includes(letter)) {
-                  return this.letterImg(letter)
+                  return letter.toUpperCase();
                 }
                 return (' _ ');
               })}
