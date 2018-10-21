@@ -1,18 +1,15 @@
 const initalstate = {
     allGuesses        : [],
     catagory          : '',
-    currentGuess      : [],
     correctGuesses    : [],
+    currentGuess      : [],
     currentWord       : [],
     data              : [],
     didYouWin         : false,
     letter            : '',
     isGameOver        : false,
-    isGameShowing     : false,
-    isMainPageShowing : true,
-    isScorePageShowing: false,
-    isScoreShowing    : false,
     strike            : 0,
+    whoIsPlayer       : null,
     wrongGuessesLeft  : 6,   
   };
 
@@ -33,12 +30,6 @@ const initalstate = {
       return {
           ...state,
           currentGuess: payload
-      }
-      case 'UPDATE_CURRENT_GUESSES':
-      return {
-          ...state,
-          currentGuesses: payload
-
       }
       case 'UPDATE_CURRENT_WORD':
       return {
@@ -62,25 +53,6 @@ const initalstate = {
       return {
           ...state,
           isGameOver: payload
-
-      }
-      case 'UPDATE_IS_GAME_SHOWING':
-      return {
-          ...state,
-          isGameShowing: payload
-
-      }
-      case 'UPDATE_IS_MAIN_PAGE_SHOWING':
-      return {
-          ...state,
-          isMainPageShowing: payload
-
-      }
-      case 'UPDATE_IS_SCORE_PAGE_SHOWING':
-      return {
-          ...state,
-          isScoreShowing: payload
-
       }
       case 'UPDATE_STRIKE':
       return {

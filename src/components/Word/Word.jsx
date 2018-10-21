@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
-import TwoPlayer from '../TwoPlayerPage/TwoPlayerPage';
 
 class Word extends Component {
   constructor(props) {
@@ -29,62 +28,73 @@ class Word extends Component {
       //it is also updating all guesses by adding each current guess to the array regardless if the guess is correct or not
       //if the current guess is not apart of the current word it updates the state of strike by adding one to the count
       //and it also updates the all guesses state by adding the current guess in the array
+      //the first else statement handles the state of player 2's wrong guesses and strikes if youre playing a 2 player match
+      //the last if statement will toggle between player 1 and player 2 only if youre playing a two player match.
       let currentGuess = this.props.currentGuess;
-      const { dispatch } = this.props;
+      const { dispatch, player1Turn, player2Strike,currentWord } = this.props;
       this.isGameOver();
-      dispatch({ type: 'UPDATE_ALL_GUESSES'             , payload: this.props.allGuesses.concat(currentGuess)});
-      dispatch({ type: 'UPDATE_CURRENT_GUESS'           , payload: '' });
+      dispatch({ type: 'UPDATE_ALL_GUESSES'                , payload: this.props.allGuesses.concat(currentGuess)});
+      dispatch({ type: 'UPDATE_CURRENT_GUESS'              , payload: '' });
       
-      if (this.props.currentWord.includes(currentGuess)) {
-        dispatch({ type: 'UPDATE_CORRECT_GUESSES'         , payload: this.props.correctGuesses.concat(currentGuess)});          
+      if (currentWord.includes(currentGuess)) {
+        dispatch({ type: 'UPDATE_CORRECT_GUESSES'          , payload: this.props.correctGuesses.concat(currentGuess)});          
       }
       else {
         if (this.props.isItTwoPlayer === true && !this.props.player1Turn && !this.props.currentWord.includes(currentGuess)) { 
-          console.log('hello from player 2 wrong guess')
-          this.isGameOver( this.props.player2Strike + 1);
-            dispatch({ type: 'UPDATE_PLAYER2_STRIKE'        , payload: this.props.player2Strike + 1 });
-            dispatch({ type: 'UPDATE_PLAYER2_WRONG_GUESSES' , payload: (+(this.props.player2WrongGuesses) - 1) });
+          this.isGameOver( player2Strike + 1);
+            dispatch({ type: 'UPDATE_PLAYER2_STRIKE'       , payload: this.props.player2Strike + 1 });
+            dispatch({ type: 'UPDATE_PLAYER2_WRONG_GUESSES', payload: (+(this.props.player2WrongGuesses) - 1) });
         }
         else {
           this.isGameOver( this.props.strike + 1);
-          dispatch({ type: 'UPDATE_STRIKE'                , payload: this.props.strike + 1});
-          dispatch({ type: 'UPDATE_WRONG_GUESSES_LEFT'    , payload: (+(this.props.wrongGuessesLeft)-1) });
+          dispatch({ type: 'UPDATE_STRIKE'                 , payload: this.props.strike + 1});
+          dispatch({ type: 'UPDATE_WRONG_GUESSES_LEFT'     , payload: (+(this.props.wrongGuessesLeft)-1) });
         }
       }
       if (this.props.isItTwoPlayer === true ) {
-        dispatch({ type: 'UPDATE_PLAYER_TURN'               , payload: !this.props.player1Turn });
+        dispatch({ type: 'UPDATE_PLAYER_TURN'              , payload: !this.props.player1Turn });
+        if (player1Turn === true) {
+        dispatch({ type: 'UPDATE_WHO_IS_PLAYER', payload: " Player One "});
+        } else {
+          dispatch({ type: 'UPDATE_WHO_IS_PLAYER', payload: " Player Two "});
+    
+        }
       }
     }
-  
 
     isGameOver(n) {
       console.log('testing isGameOver');
-      console.log('this is currentWord: '               , this.props.currentWord);
-      console.log('this is correctGuesses: '            ,this.props.correctGuesses);
-      
-      if (n == 6) {
+      console.log('this is currentWord: '                  , this.props.currentWord);
+      console.log('this is correctGuesses: '               ,this.props.correctGuesses);
+      if (n === 6) {
+        dispatch({ type: 'UPDATE_IS_GAME_OVER'             , payload: true});
         console.log('strike is at 6, should update state now');
-        const { dispatch } = this.props;
-        dispatch({ type: 'UPDATE_IS_GAME_OVER'          , payload: true});
-        dispatch({ type: 'UPDATE_DID_YOU_WIN'           , payload: false});
+       if (this.props.isItTwoPlayer === false) {
+        dispatch({ type: 'UPDATE_DID_YOU_WIN'              , payload: false});
         <Link to={'/ScorePage'}></Link>
+       } else {
+         if (this.props.strike === 6) {
+          dispatch({ type: 'UPDATE_DID_PLAYER1_WIN'           , payload: false});
+         } else {
+          if (this.props.player2Strike === 6) {
+          dispatch({ type: 'UPDATE_DID_PLAYER1_WIN'           , payload: true});
+          }
+         }
+       }
       }
       var setWord    = [...new Set(this.props.currentWord)];
       var setCorrect = [...new Set(this.props.correctGuesses)];
-      console.log('this is setword: '                   , setWord);
-      console.log('this is setCorrect: '                , setCorrect);
-      console.log('this is setword.length: '            , setWord.length);
-      console.log('this is setCorrect.length: '         , setCorrect.length);
-
+      console.log('this is setword: '                      , setWord);
+      console.log('this is setCorrect: '                   , setCorrect);
+      console.log('this is setword.length: '               , setWord.length);
+      console.log('this is setCorrect.length: '            , setCorrect.length);
       if (setWord.length-1 == setCorrect.length) {
         console.log('currentWord is now equal to correctGuesses');
         const { dispatch } = this.props;
-         dispatch({ type: 'UPDATE_IS_GAME_OVER'         , payload: true});
-         dispatch({ type: 'UPDATE_DID_YOU_WIN'          , payload: true});
+         dispatch({ type: 'UPDATE_IS_GAME_OVER'            , payload: true});
+         dispatch({ type: 'UPDATE_DID_YOU_WIN'             , payload: true});
         }
-
-    }
-   
+  }
     render() {
       if (this.props.isGameOver === true) {
         return <Redirect push to="/ScorePage" />;

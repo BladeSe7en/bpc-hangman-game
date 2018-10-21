@@ -3,11 +3,14 @@ import TwoPlayerPage from './TwoPlayerPage';
 
 function mapStoreToProps(store){
     return {
-        strike            : store.GamePage.strike,
-        player2Strike            : store.Word.player2Strike,
-        wrongGuessesLeft  : store.GamePage.wrongGuessesLeft,
-        player2WrongGuesses: store.Word.player2WrongGuesses,
-        allGuesses        : store.Word.allGuesses
+        allGuesses          : store.Word    .allGuesses,        
+        player2Strike       : store.Word    .player2Strike,
+        player2WrongGuesses : store.Word    .player2WrongGuesses,
+        strike              : store.GamePage.strike,
+        toggleAlert         : store.MainPage.toggleAlert,
+        wrongGuessesLeft    : store.GamePage.wrongGuessesLeft,
+
+
     };
 }
 

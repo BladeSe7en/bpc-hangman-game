@@ -3,17 +3,19 @@ import Word from './Word';
 
 function mapStoreToProps(store){
     return {
-    allGuesses         : store.Word.allGuesses,
-    currentGuess       : store.Word.currentGuess,
-    correctGuesses     : store.Word.correctGuesses,
+    allGuesses         : store.Word    .allGuesses,
+    correctGuesses     : store.Word    .correctGuesses,
+    currentGuess       : store.Word    .currentGuess,
     currentWord        : store.MainPage.currentWord,
-    strike             : store.Word.strike,
-    wrongGuessesLeft   : store.Word.wrongGuessesLeft,
+    didPlayer1Win      : store.Word    .didPlayer1Win,
     isGameOver         : store.GamePage.isGameOver,
     isItTwoPlayer      : store.MainPage.isItTwoPlayer,
-    player1Turn        : store.Word.player1Turn,
-    player2Strike      : store.Word.player2Strike,
-    player2WrongGuesses: store.Word.player2WrongGuesses
+    player1Turn        : store.Word    .player1Turn,
+    player2Strike      : store.Word    .player2Strike,
+    player2WrongGuesses: store.Word    .player2WrongGuesses,
+    strike             : store.Word    .strike,
+    whoIsPlayer        : store.Word    .whoIsPlayer,
+    wrongGuessesLeft   : store.Word    .wrongGuessesLeft,
 
     };
 }

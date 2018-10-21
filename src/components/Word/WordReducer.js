@@ -3,17 +3,15 @@ const initalstate = {
     currentGuess      : [],
     correctGuesses    : [],
     currentWord       : [],
-    isGameShowing     : false,
-    isMainPageShowing : true,
-    isScorePage       : false,
-    isScoreShowing    : false,
+    didPlayer1Win     : null,
+    didYouWin         : null,
     letter            : '',
     player1Turn       : true,
     player2WrongGuesses : 6,
     player2Strike     : 0,
     strike            : 0,
+    whoIsPlayer       : null,
     wrongGuessesLeft  : 6,
-    didYouWin         : null,
 
   };
 
@@ -35,11 +33,6 @@ const initalstate = {
           ...state,
           currentGuess: payload
       }
-      case 'UPDATE_CURRENT_GUESSES':
-      return {
-          ...state,
-          currentGuesses: payload
-      }
       case 'UPDATE_CURRENT_WORD':
       return {
           ...state,
@@ -55,6 +48,11 @@ const initalstate = {
           ...state,
           data: payload
       }
+      case 'UPDATE_DID_PLAYER1_WIN':
+        return {
+            ...state,
+            didPlayer1Win: payload,
+        }
       case 'UPDATE_DID_YOU_WIN':
       return {
           ...state,
@@ -70,21 +68,6 @@ const initalstate = {
           ...state,
           isGameOver: payload
       }
-      case 'UPDATE_IS_GAME_SHOWING':
-      return {
-          ...state,
-          isGameShowing: payload
-      }
-      case 'UPDATE_IS_MAIN_PAGE_SHOWING':
-      return {
-          ...state,
-          isMainPageShowing: payload
-      }
-      case 'UPDATE_IS_SCORE_PAGE':
-      return {
-          ...state,
-          isScoreShowing: payload
-      }
       case 'UPDATE_STRIKE':
       return {
           ...state,
@@ -96,6 +79,7 @@ const initalstate = {
             player1Turn: payload,
             currentGuess: ''
         }
+        
         case 'UPDATE_PLAYER2_STRIKE':
         return {
             ...state,
@@ -106,6 +90,11 @@ const initalstate = {
             ...state,
             player2WrongGuesses: payload
         }
+        case 'UPDATE_WHO_IS_PLAYER':
+      return {
+          ...state,
+          whoIsPlayer: payload
+      }
       case 'UPDATE_WRONG_GUESSES_LEFT':
       return {
           ...state,

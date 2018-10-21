@@ -6,10 +6,9 @@ function mapStoreToProps(store){
        catagory          : store.MainPage.catagory,
        currentWord       : store.MainPage.currentWord,
        data              : store.MainPage.data,
-       isGameShowing     : store.Word.isGameShowing,
-       isGameOver        : store.Word.isGameOver,
-       isMainPageShowing : store.MainPage.isMainPageShowing,
-       isItTwoPlayer     : store.MainPage.isItTwoPlayer
+       isGameOver        : store.Word    .isGameOver,
+       isItTwoPlayer     : store.MainPage.isItTwoPlayer,
+       toggleAlert       : store.MainPage.toggleAlert
 
     };
 }

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import Word from '../Word';
+import { Redirect }         from 'react-router';
+import Word                 from '../Word';
+
 
 class GamePage extends Component {
     constructor(props) {
@@ -9,8 +11,14 @@ class GamePage extends Component {
       render() {
         const { strike } = this.props;
         var img = (<img id={`hangman-${strike}`} src={`/pics/hangman-${strike}.png`} />);
+        if (this.props.isThereCatagory === false) {
+          return <Redirect push to="/MainPage" />;
+        }
         return (
           <div>
+             <Link to="/MainPage">
+          <button className="btn main-page" onClick={this.handleClick}>Single Player</button>
+          </Link>
             <div>
               <img id="title-2" src="https://cdn.discordapp.com/attachments/374257557880963072/492551101883875349/title2.png" />
               <div className="all-guesses">

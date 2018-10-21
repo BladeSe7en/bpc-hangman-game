@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Word from '../Word';
+import { Redirect }         from 'react-router';
+import Word                 from '../Word';
 
 class TwoPlayer extends Component {
     constructor(props) {
@@ -7,7 +8,10 @@ class TwoPlayer extends Component {
     }
 
     render() {
-        const { strike, allGuesses, player2Strike } = this.props;
+      const { strike, allGuesses, player2Strike, toggleAlert } = this.props;
+      if (toggleAlert === true) {
+        return <Redirect push to="/MainPage" />;
+      }
         var img = (<img id={`hangman-${strike}`} src={`/pics/hangman-${strike}.png`} />);
         var imgRev = (<img id={`hangman-${player2Strike}`} src={`/pics/hangman-${player2Strike}-reversed.png`} />);
          

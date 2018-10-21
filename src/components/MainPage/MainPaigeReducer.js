@@ -2,31 +2,24 @@ const initalstate = {
     catagory          : '',
     currentWord       : [],
     data              : [],
-    isGameShowing     : false,
     isItTwoPlayer     : false,
-    isMainPageShowing : true,
+    toggleAlert       : false
   };
   
   function MainPageReducer(state = initalstate, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case 'TOGGLE_ALERT':
+        return {
+            ...state,
+            toggleAlert: payload
+        }
         case 'UPDATE_CATAGORY':
         return {
             ...state,
             catagory: payload
         }
-        case 'UPDATE_IS_GAME_SHOWING':
-      return {
-          ...state,
-          isGameShowing: payload
-
-      }
-      case 'UPDATE_IS_MAIN_PAGE_SHOWING':
-      return {
-          ...state,
-          isMainPageShowing: payload
-      }
       case 'UPDATE_IS_IT_TWO_PLAYER':
       return {
           ...state,
