@@ -18,9 +18,15 @@ const initalstate = {
     whoIsPlayer        : null,
     whosTurnIsIt       : null,
     wrongGuessesLeft   : 6, 
+
+    isItRobotsTurn     : 'no',
+    spVsAi             : false,
+    aiDifficulty       : null,
+    didRobotGuessRight : null,
+    robotsSelection    : null
   };
 
-  function TwoPlayerPageReducer(state = initalstate, action) {
+  function SinglePlayerVsAiReducer(state = initalstate, action) {
   const { type, payload } = action;
   switch (type) {
   case 'RETURN_INITAL_STATE':
@@ -118,10 +124,28 @@ const initalstate = {
           ...state,
           wrongGuessesLeft: payload
       }
+
+
+
+
+      case 'DID_ROBOT_GUESS_RIGHT':
+      return {
+            ...state,
+            didRobotGuessRight: payload
+        }
+        case 'ROBOTS_SELECTION':
+        return {
+              ...state,
+              robotsSelection: payload
+          }
+
+
+
+
       default:
       return {
           ...state
       }
     }
 }
-    export default TwoPlayerPageReducer;
+    export default SinglePlayerVsAiReducer;

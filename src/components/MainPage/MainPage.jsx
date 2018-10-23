@@ -50,10 +50,10 @@ class MainPage extends Component {
     }}
 
     handleClickPlayerTwo() {
+      const { dispatch, toggleAlert } = this.props;
       this.isThereCatagory();
-      if (this.props.toggleAlert ===false){
+      if (toggleAlert ===false){
       this.currentWord();
-      const { dispatch } = this.props;
       dispatch({ type: 'UPDATE_IS_IT_TWO_PLAYER', payload: true});
       }}
 
@@ -69,8 +69,8 @@ class MainPage extends Component {
       console.log(e.key);
     }
     isThereCatagory() {
-      if( this.props.catagory === ''){
-        const { dispatch } = this.props;
+      const { catagory, dispatch } = this.props;
+      if( catagory === ''){
       dispatch({ type: 'TOGGLE_ALERT', payload: true});
       }
     }
@@ -83,35 +83,35 @@ class MainPage extends Component {
               <img id="hangman-title-img" src="https://occ-0-901-1001.1.nflxso.net/art/87e01/5694568c69ef4be79164f46b967e7f4c1a387e01.png" />
               <h1 className="title">Instructions</h1>
               <p className="rules">The objective is simple. You must guess your word correctly before the full charactor is drawn. On the 6th wrong answer you will lose. At the cost of one move you may click the hint button to recieve a clue about the word </p>
-              <p>To begin, please enter in a catagory.</p>
+              <p>To begin, please enter in a catagory and select either single player or two player.</p>
             </div>
-            <div className="row col-md-12">
-              <div className="col-md-3">
-                <div className="col-md-12">
+            <div className="row">
+              <div className="col-xs-3">
+                <div className="">
                   <Link to="/GamePage">
                     <button className="btn" onClick={this.handleClick}>Single Player</button>
                   </Link>
                 </div>
-                <div className="col-md-12">
+                <div className="">
                   <Link to="/TwoPlayer">
                     <button className="btn" onClick={this.handleClickPlayerTwo}>Two Player</button>
                   </Link>
                 </div>
-                <div className="col-md-12">
+                <div className="">
                   <Link to="/Leaderboard">
                     <button className="btn">Leaderboard</button>
                   </Link>
                 </div>
               </div>
-              <div className='row col-md-9'>
-              <div className="col-md-12">
+              <div className=''>
+              <div className="col-md-9">
                 <input
                   className="catagory"
                   value={this.props.catagory}
                   onChange={this.handleChange}
                   placeholder='Choose A Catagory' />
               </div>
-                  <div className="col-md-12">
+                  <div className="">
                   <div className="alert"
                   style={this.props.toggleAlert === true ? { display: 'block' } : { display: 'none' }}
                   >

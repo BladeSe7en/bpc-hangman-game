@@ -1,23 +1,37 @@
 const initalstate = {
-    allGuesses        : [],
-    currentGuess      : [],
-    correctGuesses    : [],
-    currentWord       : [],
-    didPlayer1Win     : null,
-    didYouWin         : null,
-    letter            : '',
-    player1Turn       : true,
-    player2WrongGuesses : 6,
-    player2Strike     : 0,
-    strike            : 0,
-    whoIsPlayer       : null,
-    wrongGuessesLeft  : 6,
-
+    allGuesses         : [],
+    catagory           : '',
+    correctGuesses     : [],
+    currentGuess       : [],
+    currentWord        : [],
+    data               : [],
+    didPlayer1Win      : null,
+    didYouWin          : false,
+    letter             : '',
+    isGameOver         : false,
+    isItTwoPlayer      : false,
+    player1Turn        : true,
+    player2Strike      : 0,
+    player2WrongGuesses: 6,
+    strike             : 0,
+    toggleAlert        : false,
+    whoIsPlayer        : null,
+    whosTurnIsIt       : null,
+    wrongGuessesLeft   : 6, 
   };
 
   function WordReducer(state = initalstate, action) {
   const { type, payload } = action;
   switch (type) {
+    case 'RETURN_INITAL_STATE':
+    return {
+       ...initalstate
+    }
+    case 'TOGGLE_ALERT':
+    return {
+        ...state,
+        toggleAlert: payload
+    }
       case 'UPDATE_ALL_GUESSES':
       return {
           ...state,
@@ -68,28 +82,32 @@ const initalstate = {
           ...state,
           isGameOver: payload
       }
+      case 'UPDATE_IS_IT_TWO_PLAYER':
+      return {
+          ...state,
+          isItTwoPlayer: payload
+      } 
+       case 'UPDATE_PLAYER_TURN':
+      return {
+          ...state,
+          player1Turn: payload,
+          currentGuess: ''
+      }
+      case 'UPDATE_PLAYER2_STRIKE':
+      return {
+          ...state,
+          player2Strike: payload
+      }
+      case 'UPDATE_PLAYER2_WRONG_GUESSES':
+      return {
+          ...state,
+          player2WrongGuesses: payload
+      }
       case 'UPDATE_STRIKE':
       return {
           ...state,
           strike: payload
       }
-      case 'UPDATE_PLAYER_TURN':
-        return {
-            ...state,
-            player1Turn: payload,
-            currentGuess: ''
-        }
-        
-        case 'UPDATE_PLAYER2_STRIKE':
-        return {
-            ...state,
-            player2Strike: payload
-        }
-        case 'UPDATE_PLAYER2_WRONG_GUESSES':
-        return {
-            ...state,
-            player2WrongGuesses: payload
-        }
         case 'UPDATE_WHO_IS_PLAYER':
       return {
           ...state,
@@ -106,5 +124,4 @@ const initalstate = {
       }
   }
 }
-
 export default WordReducer;

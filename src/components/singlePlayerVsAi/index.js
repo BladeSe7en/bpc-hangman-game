@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import TwoPlayerPage from './TwoPlayerPage';
+import singlePlayerVsAi from './singlePlayerVsAi';
 
 function mapStoreToProps(store){
     return {
@@ -21,7 +21,10 @@ function mapStoreToProps(store){
         toggleAlert         : store.MainPage.toggleAlert,
         whoIsPlayer       : store.Word      .whoIsPlayer,
         wrongGuessesLeft  : store.ScorePage.wrongGuessesLeft,
+
+        didRobotGuessRight: store.singlePlayerVsAi.didRobotGuessRight,
+        robotsSelection: store.singlePlayerVsAi.robotsSelection
     };
 }
 
-export default connect(mapStoreToProps)(TwoPlayerPage);
+export default connect(mapStoreToProps)(singlePlayerVsAi);
