@@ -1,16 +1,11 @@
 import { connect } from 'react-redux';
 import GamePage from './GamePage';
 
-function mapStoreToProps(store){
+function mapStoreToProps(store) {
     return {
-        allGuesses        : store.Word.allGuesses,
-        didYouWin         : store.GamePage.didYouWin,
-        isGameOver        : store.GamePage.isGameOver,
-        isGameShowing     : store.GamePage.isGameShowing,
-        isScoreShowing    : store.GamePage.isScoreShowing,
-        strike            : store.GamePage.strike,
-        wrongGuessesLeft  : store.GamePage.wrongGuessesLeft
-
+        allGuesses         : store.Word    .allGuesses,
+        strike             : store.Word    .strike,
+        wrongGuessesLeft   : store.Word    .wrongGuessesLeft,
     };
 }
 

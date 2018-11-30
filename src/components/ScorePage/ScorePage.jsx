@@ -1,146 +1,296 @@
 import React, { Component } from 'react';
+import { Link }             from 'react-router-dom';
+import { updateMutualState } from './ScorePageAction';
 var axios = require('axios');
 
 class ScorePage extends Component {
     constructor(props) {
         super(props);
-        this.handleChange        = this.handleChange.bind(this);
-        this.handleClick         = this.handleClick.bind(this);
-        this.sameCatagoryNewWord = this.sameCatagoryNewWord.bind(this);
-        this.currentWord         = this.currentWord.bind(this);
-
+        this.currentWord                               = this.currentWord.bind(this);
+        this.handleAiDiffCat                           = this.handleAiDiffCat.bind(this);
+        this.handleAiSameCat                           = this.handleAiDiffCat.bind(this);
+        this.handleChange                              = this.handleChange.bind(this);
+        this.handleEasyDifficulty                      = this.handleEasyDifficulty.bind(this);
+        this.handleExpertDifficulty                    = this.handleExpertDifficulty.bind(this);
+        this.handleHardDifficulty                      = this.handleHardDifficulty.bind(this);
+        this.handleSinglePlayerDiffCat                 = this.handleSinglePlayerDiffCat.bind(this);
+        this.handleSinglePlayerSameCat                 = this.handleSinglePlayerSameCat.bind(this);
+        this.handleSingleVsAi                          = this.handleSingleVsAi.bind(this);
+        this.handleTwoPlayerDiffCat                    = this.handleTwoPlayerDiffCat.bind(this);
+        this.handleTwoPlayerSameCat                    = this.handleTwoPlayerSameCat.bind(this);
+        this.handleMediumDifficulty                    = this.handleMediumDifficulty.bind(this);
+        this.returnToMainPage                          = this.returnToMainPage.bind(this);
+        this.sameCatagoryNewWord                       = this.sameCatagoryNewWord.bind(this);
     }
+    
     currentWord() {
-        console.log('hello from current word function2');
-        const { catagory } = this.props;
+        const { catagory, dispatch } = this.props;
         var topic = catagory;
         console.log('this is topic ', topic);
         axios.get(`https://api.datamuse.com/words?topics=${topic}`)
-          .then(response => {
+        .then(response => {
             var index = Math.floor(Math.random() * response.data.length);
-            console.log('this is index: ', index);
-            console.log('this is data: ', response.data[index]);
-            console.log('this is length: ', response.data.length);
-            const { dispatch } = this.props;
-            dispatch({ type: 'UPDATE_ALL_GUESSES'          , payload: [] });
-            dispatch({ type: 'UPDATE_CATAGORY'             , payload: [] });
-            dispatch({ type: 'UPDATE_CORRECT_GUESSES'      , payload: [] });
-            dispatch({ type: 'UPDATE_CURRENT_GUESS'        , payload: [] });
-            dispatch({ type: 'UPDATE_CURRENT_WORD'         , payload: response.data[index].word.split('') });
-            dispatch({ type: 'UPDATE_DATA'                 , payload: response.data });
-            dispatch({ type: 'UPDATE_DID_YOU_WIN'          , payload: null });
-            dispatch({ type: 'UPDATE_IS_GAME_OVER'         , payload: false });
-            dispatch({ type: 'UPDATE_IS_GAME_SHOWING'      , payload: true });
-            dispatch({ type: 'UPDATE_IS_SCORE_PAGE_SHOWING', payload: false });
-            dispatch({ type: 'UPDATE_LETTER'               , payload: [] });
-            dispatch({ type: 'UPDATE_STRIKE'               , payload: 0 });
-            dispatch({ type: 'UPDATE_WRONG_GUESSES_LEFT'   , payload: 6 });
-          } 
-        )
+            console.log('this is index: '              , index);
+            console.log('this is data: '               , response.data[index]);
+            console.log('this is length: '             , response.data.length);
+            dispatch({ type: 'UPDATE_DATA'             , payload: response.data });
+            dispatch({ type: 'UPDATE_CURRENT_WORD'     , payload: response.data[index].word.split('') });
+            dispatch(updateMutualState());
+        })
         .catch((err) => {
-      console.log(err);
-      response.send(err);
-    });
-      }
-
-    sameCatagoryNewWord() {
-        var index = Math.floor(Math.random() * this.props.data.length);
-        console.log('this is index: ', index);
-        console.log('this is data: ', this.props.data[index]);
-        console.log('this is length: ', this.props.data.length);
-        const { dispatch } = this.props;
-        dispatch({ type: 'UPDATE_ALL_GUESSES'          , payload: [] });
-        dispatch({ type: 'UPDATE_CORRECT_GUESSES'      , payload: [] });
-        dispatch({ type: 'UPDATE_CURRENT_GUESS'        , payload: [] });
-        dispatch({ type: 'UPDATE_CURRENT_WORD'         , payload: this.props.data[index].word.split('') });
-        dispatch({ type: 'UPDATE_DID_YOU_WIN'          , payload: null });
-        dispatch({ type: 'UPDATE_IS_GAME_OVER'         , payload: false });
-        dispatch({ type: 'UPDATE_IS_GAME_SHOWING'      , payload: true });
-        dispatch({ type: 'UPDATE_IS_SCORE_PAGE_SHOWING', payload: false });
-        dispatch({ type: 'UPDATE_LETTER'               , payload: [] });
-        dispatch({ type: 'UPDATE_STRIKE'               , payload: 0 });
-        dispatch({ type: 'UPDATE_WRONG_GUESSES_LEFT'   , payload: 6 });
+            console.log(err);
+            response.send(err);
+        });
     }
-    
-    handleClick() {
-        console.log('click handler was clicked');
+    handleAiDiffCat(){
+        console.log('testing handleAi diff cat');
         this.currentWord();
         const { dispatch } = this.props;
-        dispatch({ type: 'UPDATE_IS_GAME_OVER', payload: false});
+        if (this.props.toggleAlert ===false){
+          console.log('testing handleSingleVsAi111111111');
+          dispatch({ type: 'IS_IT_SP_VS_AI'   , payload: true });
+          dispatch({ type: 'IS_IT_ROBOTS_TURN', payload: false });
+          dispatch(updateMutualState());
+          }
+      }
+
+    handleAiSameCat() {
+        console.log('testing handleAi same cat');
+
+        this.sameCatagoryNewWord();
+        const { dispatch } = this.props;
+        dispatch({ type: 'IS_IT_SP_VS_AI'     , payload: true });
+        dispatch(updateMutualState());
     }
+
+    handleEasyDifficulty(){
+        this.handleSingleVsAi();
+        const { dispatch } = this.props;
+        dispatch({ type: 'UPDATE_AI_DIFFICULTY', payload: 0.25 });
+      }
+
+      handleMediumDifficulty(){
+        this.handleSingleVsAi();
+        const { dispatch } = this.props;
+        dispatch({ type: 'UPDATE_AI_DIFFICULTY', payload: 0.50 });
+      }
+
+      handleHardDifficulty(){
+        this.handleSingleVsAi();
+        const { dispatch } = this.props;
+        dispatch({ type: 'UPDATE_AI_DIFFICULTY', payload: 0.75 });
+      }
+
+      handleExpertDifficulty(){
+        this.handleSingleVsAi();
+        const { dispatch } = this.props;
+        dispatch({ type: 'UPDATE_AI_DIFFICULTY', payload: 1.00 });
+      }
+
+      handleAiSameCat(){
+        console.log('testing Ai same cat');
+        const { dispatch } = this.props;
+        if (this.props.toggleAlert ===false){
+          dispatch({ type: 'IS_IT_SP_VS_AI'   , payload: true });
+          dispatch({ type: 'IS_IT_ROBOTS_TURN', payload: false });
+          this.sameCatagoryNewWord();
+          }
+      }
+    
 
     handleChange(e) {
         const { dispatch } = this.props;
-        console.log("hello from component method");
-        dispatch({ type: 'UPDATE_CATAGORY', payload: e.target.value.toLowerCase()});
+        dispatch({ type: 'UPDATE_CATAGORY'             , payload: e.target.value.toLowerCase()});
+    }
+
+    handleSinglePlayerDiffCat() {
+        this.currentWord();
+        const { dispatch } = this.props;
+        dispatch({ type: 'UPDATE_IS_IT_TWO_PLAYER'     , payload: false });
+        dispatch(updateMutualState());
+    }
+
+    handleSinglePlayerSameCat() {
+        this.sameCatagoryNewWord();
+        const { dispatch } = this.props;
+        dispatch({ type: 'UPDATE_IS_IT_TWO_PLAYER'     , payload: false });
+        dispatch(updateMutualState());
+    }
+    handleSingleVsAi(){
+        console.log('testing handleSingleVsAi');
+        const { dispatch } = this.props;
+        if (this.props.toggleAlert ===false){
+          console.log('testing handleSingleVsAi111111111');
+          dispatch({ type: 'IS_IT_SP_VS_AI'   , payload: true });
+          dispatch({ type: 'IS_IT_ROBOTS_TURN', payload: false });
+          this.currentWord();
+          }
+      }
+
+    handleTwoPlayerDiffCat() {
+        console.log('new cat say hi');
+        this.currentWord();
+        const { dispatch } = this.props;
+        dispatch({ type: 'UPDATE_IS_IT_TWO_PLAYER'     , payload: true });
+        dispatch(updateMutualState());
+    }
+
+    handleTwoPlayerSameCat() {
+        this.sameCatagoryNewWord();
+        const { dispatch } = this.props;
+        dispatch({ type: 'UPDATE_IS_IT_TWO_PLAYER'     , payload: true });
+        dispatch(updateMutualState());
+    }
+
+    returnToMainPage(){
+        const { dispatch } = this.props;
+        dispatch({ type: 'RETURN_INITAL_STATE' });
+    }
+
+    sameCatagoryNewWord() {
+        const { dispatch, data } = this.props;
+        var index = Math.floor(Math.random() * data.length);
+        console.log('this is index: '                  , index);
+        console.log('this is data: '                   , data[index]);
+        console.log('this is length: '                 , data.length);
+        dispatch({ type: 'UPDATE_CURRENT_WORD'         , payload: data[index].word.split('') });
+        dispatch(updateMutualState());
     }
 
     render() {
-        var img = <img id="hangman-0" src="https://cdn.discordapp.com/attachments/374257557880963072/492878824501936149/hangman-0.png" />;
-        var letter = this.props.letter;
-  
-        if (this.props.strike === 1) {
-          img = <img id="hangman-1" src="https://media.discordapp.net/attachments/374257557880963072/492878854529089547/hangman-1.png" />
+        const { currentWord, didPlayer1Win, didYouWin, isItTwoPlayer, player2Strike, strike, whoIsPlayer } = this.props;
+        var img = (<img id={`hangman-${strike}`} src={`/pics/hangman-${strike}.png`} />);
+        var imgRev = (<img id={`hangman-${player2Strike}`} src={`/pics/hangman-${player2Strike}-reversed.png`} />);
+        var message;
+        var answer;
+        
+        /*single player victory*/
+        if (didYouWin && !isItTwoPlayer) {
+            console.log('single player victory');
+            message = 'Congratulations! You Won! Would You Like To Play Again?';
+            answer  = `You guessed ${currentWord.join('')} correctly`;
         }
-        if (this.props.strike === 2) {
-          img = <img id="hangman-2" src="https://media.discordapp.net/attachments/374257557880963072/492878881896923150/hangman-2.png" />
+        /*single player defeat */
+        if (!didYouWin && !isItTwoPlayer) {
+            console.log('single player defeat');
+            message = 'You Lost! Would You Like To Play Again?';
+            answer  = `The Correct Word Was ${currentWord.join('')}`;
         }
-        if (this.props.strike === 3) {
-          img = <img id="hangman-3" src="https://media.discordapp.net/attachments/374257557880963072/492878930995576832/hangman-3.png" />
+        /*two player: player 1 wins */
+        if (isItTwoPlayer && didPlayer1Win) {
+            console.log('player one  victory');
+            message = `Congratulations ${whoIsPlayer}! Would You Like To Play Again?`;
+            answer  = `You guessed ${currentWord.join('')} correctly`;
         }
-        if (this.props.strike === 4) {
-          img = <img id="hangman-4" src="https://media.discordapp.net/attachments/374257557880963072/492878991133376523/hangman-4.png" />
+         /*two player victory for either player one or player two */
+         if (isItTwoPlayer && !didPlayer1Win) {
+            console.log('player two  victory');
+            message = `Congratulations ${whoIsPlayer}! Would You Like To Play Again?`;
+            answer  = `You guessed ${currentWord.join('')} correctly`;
         }
-        if (this.props.strike === 5) {
-          img = <img id="hangman-5" src="https://media.discordapp.net/attachments/374257557880963072/492879021600669716/hangman-5.png" />
-        }
-        if (this.props.strike === 6) {
-          img = <img id="hangman-6" src="https://media.discordapp.net/attachments/374257557880963072/492879053070532618/hangman-6.png" />
-        }
-        if (this.props.isGameOver === true) {
-            if (this.props.didYouWin) {
-                return (
-                    <div className='victory'>
-                        <div>
-                        <h1>Congratulations you won! WOULD YOU LIKE TO TRY AGAIN?</h1>
-                        </div>
-                        <button className="btn" onClick={this.sameCatNewWord}>SAME CATAGORY</button>
-                        <input
-                            className="catagory"
-                            placeholder="new catagory"
-                            value={this.props.catagory}
-                            onChange={this.handleChange} />
-                        <button className="btn" onClick={this.handleClick}>NEW CATAGORY</button>
-                        <h3>You guessed {this.props.currentWord} correctly.</h3>
-                        <div classname='row'>
-                            <div className='hangman'>
-                            {img}
-                            </div>
-                            <div className='leaderboard'>
-                            </div>
-                        </div>
-                    </div>
-                )
-            } else {
+       
             return (
-                <div className='defeat'>
+                <div className='scoreHeader'>
+                    <Link to="/">
+                    <button className="btn" onClick={this.returnToMainPage}>Main Page</button>
+                    </Link>
                     <div>
-                        <h1>GAME OVER! WOULD YOU LIKE TO TRY AGAIN?</h1>
+                        <h1>{message}</h1>
                     </div>
-                    <button className="btn" onClick={this.sameCatagoryNewWord}>SAME CATAGORY</button>
-                    <input
-                        className="catagory"
-                        placeholder="new catagory"
-                        value={this.props.catagory}
-                        onChange={this.handleChange} />
-                    <button className="btn" onClick={this.handleClick}>NEW CATAGORY</button>
-                    <h3>The word was {this.props.currentWord}.</h3>
+                    <div className="container">
+                        <div className="row">
+
+                            <div className="col-xs-4">
+                                <div className="">
+                                    <Link to="/TwoPlayer">
+                                        <button className="btn" onClick={this.handleTwoPlayerSameCat}>SAME CATAGORY TWO PLAYER</button>
+                                    </Link>
+                                </div>
+
+                                <div className="">
+                                    <Link to="/GamePage">
+                                        <button className="btn" onClick={this.handleSinglePlayerSameCat}>SAME CATAGORY SINGLE PLAYER</button>
+                                    </Link>
+                                </div>
+                                <div className="">
+                                <div className="dropdown">
+                                    <button className="dropbtn btn">SAME CATAGORY VS AI</button>
+                                    <div className="dropdown-content">
+                                    <Link to="/SinglePlayerVsAi">
+                                    <button className="btn" onClick={() => {this.handleEasyDifficulty();  this.sameCatagoryNewWord()}}>Easy</button>
+                                        </Link>
+                                        <Link to="/SinglePlayerVsAi">
+                                        <button className="btn" onClick={() => {this.handleMediumDifficulty(); this.sameCatagoryNewWord()}}>Medium</button>
+                                        </Link>
+                                        <Link to="/SinglePlayerVsAi">
+                                        <button className="btn" onClick={() => {this.handleHardDifficulty(); this.sameCatagoryNewWord()}}>Hard</button>
+                                        </Link>
+                                        <Link to="/SinglePlayerVsAi">
+                                        <button className="btn" onClick={() => {this.handleExpertDifficulty(); this.sameCatagoryNewWord()}}>Expert</button>
+                                        </Link>
+                                    </div>
+                 
+            </div>
+                                </div>
+                            </div>
+                            
+                            <div className="col-xs-4">
+                                <input
+                                    className="catagory"
+                                    placeholder="new catagory"
+                                    onChange={this.handleChange} />
+                            </div>
+                            <div className="col-xs-4">
+                                <div className="">
+                                    <Link to="/TwoPlayer">
+                                        <button className="btn" onClick={this.handleTwoPlayerDiffCat}>NEW CATAGORY TWO PLAYER</button>
+                                    </Link>
+                                </div>
+
+                                <div className="">
+                                    <Link to="/GamePage">
+                                        <button className="btn" onClick={this.handleSinglePlayerDiffCat}>NEW CATAGORY SINGLE PLAYER</button>
+                                    </Link>
+                                </div>
+                                <div className="">
+                                <div className="dropdown">
+                                    <button className="dropbtn btn">NEW CATAGORY VS AI</button>
+                                    <div className="dropdown-content">
+                                    <Link to="/SinglePlayerVsAi">
+                                    <button className="btn" onClick={() => {this.handleEasyDifficulty; this.currentWord}}>Easy</button>
+                                        </Link>
+                                        <Link to="/SinglePlayerVsAi">
+                                        <button className="btn" onClick={() => {this.handleMediumDifficulty; this.currentWord}}>Medium</button>
+                                        </Link>
+                                        <Link to="/SinglePlayerVsAi">
+                                        <button className="btn" onClick={() => {this.handleHardDifficulty; this.currentWord}}>Hard</button>
+                                        </Link>
+                                        <Link to="/SinglePlayerVsAi">
+                                        <button className="btn" onClick={() => {this.handleExpertDifficulty; this.currentWord}}>Expert</button>
+                                        </Link>
+                                    </div>
+                 
+            </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <h3>{answer}</h3>
+                    <div className='hangman-game-over' 
+                    /* for two player, shows player one's gallows */
+                        style={!isItTwoPlayer ? { display: 'block' } : { display: 'none' }}>
+                        {img}
+                    </div>
+                    <div className='hangman-game-over' 
+                    /* for two player, shows player two's gallows */
+                        style={isItTwoPlayer && !didPlayer1Win ? { display: 'block' } : { display: 'none' }}>
+                        {imgRev}
+                    </div>
+                    <div className='leaderboard'>
+                    </div>
                 </div>
-            )}
+            )
         }
-        else {
-            return null
-        }
-    }
 }
 export default ScorePage;
