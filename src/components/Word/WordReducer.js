@@ -1,23 +1,18 @@
 const initalstate = {
-    allGuesses         : [],
-    catagory           : '',
-    correctGuesses     : [],
-    currentGuess       : [],
-    currentWord        : [],
-    data               : [],
-    didPlayer1Win      : null,
-    didYouWin          : false,
-    letter             : '',
-    isGameOver         : false,
-    isItTwoPlayer      : false,
-    player1Turn        : true,
-    player2Strike      : 0,
-    player2WrongGuesses: 6,
-    strike             : 0,
-    toggleAlert        : false,
-    whoIsPlayer        : null,
-    whosTurnIsIt       : null,
-    wrongGuessesLeft   : 6, 
+    allGuesses           : [],
+    correctGuesses       : [],
+    currentGuess         : [],
+    didPlayer1Win        : null,
+    didYouWin            : false,
+    isGameOver           : false,
+    isItRobotsTurn       : false,
+    player1Turn          : true,
+    player2Strike        : 0,
+    player2WrongGuesses  : 6,
+    robotStrike          : 0,
+    robotWrongLeft       : 6, 
+    strike               : 0,
+    wrongGuessesLeft     : 6, 
   };
 
   function WordReducer(state = initalstate, action) {
@@ -25,99 +20,90 @@ const initalstate = {
   switch (type) {
     case 'RETURN_INITAL_STATE':
     return {
-       ...initalstate
+       ...initalstate,
     }
-    case 'TOGGLE_ALERT':
-    return {
-        ...state,
-        toggleAlert: payload
-    }
-      case 'UPDATE_ALL_GUESSES':
-      return {
-          ...state,
-          allGuesses: payload
-      }
-      case 'UPDATE_CATAGORY':
-      return {
-          ...state,
-          catagory: payload
-      }
+    case 'UPDATE_MUTUAL_STATE':
+        return {
+            ...initalstate
+        }
       case 'UPDATE_CURRENT_GUESS':                   
       return {
           ...state,
           currentGuess: payload
       }
-      case 'UPDATE_CURRENT_WORD':
+      case 'BEAT_AI':                   
       return {
           ...state,
-          currentWord: payload
+          didYouBeatAi: payload
+      }
+      case 'UPDATE_GUESSES': {
+          return {
+              ...state,
+              currentGuess: '',
+              allGuesses: payload
+          }
       }
       case 'UPDATE_CORRECT_GUESSES':
       return {
           ...state,
           correctGuesses: payload
       }
-      case 'UPDATE_DATA':
-      return {
-          ...state,
-          data: payload
-      }
-      case 'UPDATE_DID_PLAYER1_WIN':
+      case 'PLAYER1_WIN':
         return {
             ...state,
             didPlayer1Win: payload,
         }
-      case 'UPDATE_DID_YOU_WIN':
+      case 'YOU_WIN':
       return {
           ...state,
           didYouWin: payload
       }
-      case 'UPDATE_LETTER':
-      return {
-          ...state,
-          letter: payload
-      }
-      case 'UPDATE_IS_GAME_OVER':
+      case 'GAME_OVER':
       return {
           ...state,
           isGameOver: payload
       }
-      case 'UPDATE_IS_IT_TWO_PLAYER':
+      case 'PLAYER2_WRONG':
       return {
           ...state,
-          isItTwoPlayer: payload
-      } 
-       case 'UPDATE_PLAYER_TURN':
-      return {
-          ...state,
-          player1Turn: payload,
-          currentGuess: ''
+          ...payload
       }
-      case 'UPDATE_PLAYER2_STRIKE':
-      return {
-          ...state,
-          player2Strike: payload
-      }
-      case 'UPDATE_PLAYER2_WRONG_GUESSES':
-      return {
-          ...state,
-          player2WrongGuesses: payload
-      }
-      case 'UPDATE_STRIKE':
-      return {
-          ...state,
-          strike: payload
-      }
-        case 'UPDATE_WHO_IS_PLAYER':
+      case 'WHOS_PLAYER':
       return {
           ...state,
           whoIsPlayer: payload
       }
-      case 'UPDATE_WRONG_GUESSES_LEFT':
-      return {
-          ...state,
-          wrongGuessesLeft: payload
-      }
+      case 'ON_CHANGE': {
+        return {
+            ...state,
+            ...payload
+        }
+    }
+    case 'ROBOT_IS_RIGHT': {
+        return {
+            ...state,
+            ...payload
+        }
+    }
+    case 'SP_WRONG': {
+        return {
+            ...state,
+            ...payload
+        }
+    }
+    case 'P1_TURN': {
+        return {
+            ...state,
+            player1Turn: payload,
+            currentGuess: ''
+        }
+    }
+    case 'ROBOT_IS_WRONG': {
+        return {
+            ...state,
+            ...payload
+        }
+    }
       default:
       return {
           ...state

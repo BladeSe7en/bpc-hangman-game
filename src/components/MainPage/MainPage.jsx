@@ -9,12 +9,18 @@ var axios = require('axios');
 class MainPage extends Component {
   constructor(props) {
     super(props);
-    this.currentWord          = this.currentWord.bind(this);
-    this.enter                = this.enter.bind(this);
-    this.handleChange         = this.handleChange.bind(this);
-    this.handleClick          = this.handleClick.bind(this);
-    this.handleClickPlayerTwo = this.handleClickPlayerTwo.bind(this);
-    this.handleAlertClick     = this.handleAlertClick.bind(this);
+    this.currentWord             = this.currentWord.bind(this);
+    this.enter                   = this.enter.bind(this);
+    this.handleChange            = this.handleChange.bind(this);
+    this.handleClick             = this.handleClick.bind(this);
+    this.handleClickPlayerTwo    = this.handleClickPlayerTwo.bind(this);
+    this.handleAlertClick        = this.handleAlertClick.bind(this);
+    this.handleEasyDifficulty    = this.handleEasyDifficulty.bind(this);
+    this.handleMediumDifficulty  = this.handleMediumDifficulty.bind(this);
+    this.handleHardDifficulty    = this.handleHardDifficulty.bind(this);
+    this.handleExpertDifficulty  = this.handleExpertDifficulty.bind(this);
+    this.handleSingleVsAi        = this.handleSingleVsAi.bind(this);
+
 
   }
 
@@ -38,7 +44,39 @@ class MainPage extends Component {
   response.send(err);
 });
   }
-  
+
+  handleEasyDifficulty(){
+    this.handleSingleVsAi();
+    const { dispatch } = this.props;
+    dispatch({ type: 'UPDATE_AI_DIFFICULTY', payload: 0.25 });
+  }
+  handleMediumDifficulty(){
+    this.handleSingleVsAi();
+    const { dispatch } = this.props;
+    dispatch({ type: 'UPDATE_AI_DIFFICULTY', payload: 0.50 });
+  }
+  handleHardDifficulty(){
+    this.handleSingleVsAi();
+    const { dispatch } = this.props;
+    dispatch({ type: 'UPDATE_AI_DIFFICULTY', payload: 0.75 });
+  }
+  handleExpertDifficulty(){
+    this.handleSingleVsAi();
+    const { dispatch } = this.props;
+    dispatch({ type: 'UPDATE_AI_DIFFICULTY', payload: 1.00 });
+  }
+  handleSingleVsAi(){
+    console.log('testing handleSingleVsAi');
+    const { dispatch } = this.props;
+    if (this.props.toggleAlert ===false){
+      console.log('testing handleSingleVsAi111111111');
+      dispatch({ type: 'IS_IT_SP_VS_AI'   , payload: true });
+      dispatch({ type: 'IS_IT_ROBOTS_TURN', payload: false });
+      this.currentWord();
+      }
+  }
+
+
   handleChange(e) {
     const { dispatch } = this.props;
     dispatch({ type: 'UPDATE_CATAGORY', payload: e.target.value.toLowerCase()});
@@ -87,6 +125,26 @@ class MainPage extends Component {
             </div>
             <div className="row">
               <div className="col-xs-3">
+              <div className="">
+                <div className="dropdown">
+              <button className="dropbtn btn">Single Player VS AI</button>
+              <div className="dropdown-content">
+              <Link to="/SinglePlayerVsAi">
+              <button className="btn" onClick={this.handleEasyDifficulty}>Easy</button>
+                </Link>
+                <Link to="/SinglePlayerVsAi">
+                <button className="btn" onClick={this.handleMediumDifficulty}>Medium</button>
+                </Link>
+                <Link to="/SinglePlayerVsAi">
+                <button className="btn" onClick={this.handleHardDifficulty}>Hard</button>
+                </Link>
+                <Link to="/SinglePlayerVsAi">
+                <button className="btn" onClick={this.handleExpertDifficulty}>Expert</button>
+                </Link>
+              </div>
+                 
+            </div>
+                </div>
                 <div className="">
                   <Link to="/GamePage">
                     <button className="btn" onClick={this.handleClick}>Single Player</button>
@@ -97,6 +155,7 @@ class MainPage extends Component {
                     <button className="btn" onClick={this.handleClickPlayerTwo}>Two Player</button>
                   </Link>
                 </div>
+          
                 <div className="">
                   <Link to="/Leaderboard">
                     <button className="btn">Leaderboard</button>

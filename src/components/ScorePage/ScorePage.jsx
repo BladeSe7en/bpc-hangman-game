@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
 import { Link }             from 'react-router-dom';
+import { updateMutualState } from './ScorePageAction';
 var axios = require('axios');
 
-class SinglePlayerVsAiReducer extends Component {
+class ScorePage extends Component {
     constructor(props) {
         super(props);
         this.currentWord                               = this.currentWord.bind(this);
+        this.handleAiDiffCat                           = this.handleAiDiffCat.bind(this);
+        this.handleAiSameCat                           = this.handleAiDiffCat.bind(this);
         this.handleChange                              = this.handleChange.bind(this);
+        this.handleEasyDifficulty                      = this.handleEasyDifficulty.bind(this);
+        this.handleExpertDifficulty                    = this.handleExpertDifficulty.bind(this);
+        this.handleHardDifficulty                      = this.handleHardDifficulty.bind(this);
         this.handleSinglePlayerDiffCat                 = this.handleSinglePlayerDiffCat.bind(this);
         this.handleSinglePlayerSameCat                 = this.handleSinglePlayerSameCat.bind(this);
+        this.handleSingleVsAi                          = this.handleSingleVsAi.bind(this);
         this.handleTwoPlayerDiffCat                    = this.handleTwoPlayerDiffCat.bind(this);
         this.handleTwoPlayerSameCat                    = this.handleTwoPlayerSameCat.bind(this);
+        this.handleMediumDifficulty                    = this.handleMediumDifficulty.bind(this);
         this.returnToMainPage                          = this.returnToMainPage.bind(this);
         this.sameCatagoryNewWord                       = this.sameCatagoryNewWord.bind(this);
-        this.updateMutualState                         = this.updateMutualState.bind(this);
     }
     
     currentWord() {
@@ -28,14 +35,69 @@ class SinglePlayerVsAiReducer extends Component {
             console.log('this is length: '             , response.data.length);
             dispatch({ type: 'UPDATE_DATA'             , payload: response.data });
             dispatch({ type: 'UPDATE_CURRENT_WORD'     , payload: response.data[index].word.split('') });
-            this.updateMutualState();
+            dispatch(updateMutualState());
         })
         .catch((err) => {
             console.log(err);
             response.send(err);
         });
     }
+    handleAiDiffCat(){
+        console.log('testing handleAi diff cat');
+        this.currentWord();
+        const { dispatch } = this.props;
+        if (this.props.toggleAlert ===false){
+          console.log('testing handleSingleVsAi111111111');
+          dispatch({ type: 'IS_IT_SP_VS_AI'   , payload: true });
+          dispatch({ type: 'IS_IT_ROBOTS_TURN', payload: false });
+          dispatch(updateMutualState());
+          }
+      }
+
+    handleAiSameCat() {
+        console.log('testing handleAi same cat');
+
+        this.sameCatagoryNewWord();
+        const { dispatch } = this.props;
+        dispatch({ type: 'IS_IT_SP_VS_AI'     , payload: true });
+        dispatch(updateMutualState());
+    }
+
+    handleEasyDifficulty(){
+        this.handleSingleVsAi();
+        const { dispatch } = this.props;
+        dispatch({ type: 'UPDATE_AI_DIFFICULTY', payload: 0.25 });
+      }
+
+      handleMediumDifficulty(){
+        this.handleSingleVsAi();
+        const { dispatch } = this.props;
+        dispatch({ type: 'UPDATE_AI_DIFFICULTY', payload: 0.50 });
+      }
+
+      handleHardDifficulty(){
+        this.handleSingleVsAi();
+        const { dispatch } = this.props;
+        dispatch({ type: 'UPDATE_AI_DIFFICULTY', payload: 0.75 });
+      }
+
+      handleExpertDifficulty(){
+        this.handleSingleVsAi();
+        const { dispatch } = this.props;
+        dispatch({ type: 'UPDATE_AI_DIFFICULTY', payload: 1.00 });
+      }
+
+      handleAiSameCat(){
+        console.log('testing Ai same cat');
+        const { dispatch } = this.props;
+        if (this.props.toggleAlert ===false){
+          dispatch({ type: 'IS_IT_SP_VS_AI'   , payload: true });
+          dispatch({ type: 'IS_IT_ROBOTS_TURN', payload: false });
+          this.sameCatagoryNewWord();
+          }
+      }
     
+
     handleChange(e) {
         const { dispatch } = this.props;
         dispatch({ type: 'UPDATE_CATAGORY'             , payload: e.target.value.toLowerCase()});
@@ -45,34 +107,44 @@ class SinglePlayerVsAiReducer extends Component {
         this.currentWord();
         const { dispatch } = this.props;
         dispatch({ type: 'UPDATE_IS_IT_TWO_PLAYER'     , payload: false });
-        this.updateMutualState();
+        dispatch(updateMutualState());
     }
 
     handleSinglePlayerSameCat() {
         this.sameCatagoryNewWord();
         const { dispatch } = this.props;
         dispatch({ type: 'UPDATE_IS_IT_TWO_PLAYER'     , payload: false });
-        this.updateMutualState();
+        dispatch(updateMutualState());
     }
+    handleSingleVsAi(){
+        console.log('testing handleSingleVsAi');
+        const { dispatch } = this.props;
+        if (this.props.toggleAlert ===false){
+          console.log('testing handleSingleVsAi111111111');
+          dispatch({ type: 'IS_IT_SP_VS_AI'   , payload: true });
+          dispatch({ type: 'IS_IT_ROBOTS_TURN', payload: false });
+          this.currentWord();
+          }
+      }
 
     handleTwoPlayerDiffCat() {
         console.log('new cat say hi');
         this.currentWord();
         const { dispatch } = this.props;
         dispatch({ type: 'UPDATE_IS_IT_TWO_PLAYER'     , payload: true });
-        this.updateMutualState();
+        dispatch(updateMutualState());
     }
 
     handleTwoPlayerSameCat() {
         this.sameCatagoryNewWord();
         const { dispatch } = this.props;
         dispatch({ type: 'UPDATE_IS_IT_TWO_PLAYER'     , payload: true });
-        this.updateMutualState();
+        dispatch(updateMutualState());
     }
 
     returnToMainPage(){
-        const { dispatch, initalstate } = this.props;
-        dispatch({ type: 'RETURN_INITAL_STATE', payload: initalstate });
+        const { dispatch } = this.props;
+        dispatch({ type: 'RETURN_INITAL_STATE' });
     }
 
     sameCatagoryNewWord() {
@@ -82,25 +154,8 @@ class SinglePlayerVsAiReducer extends Component {
         console.log('this is data: '                   , data[index]);
         console.log('this is length: '                 , data.length);
         dispatch({ type: 'UPDATE_CURRENT_WORD'         , payload: data[index].word.split('') });
-        this.updateMutualState();
+        dispatch(updateMutualState());
     }
-      updateMutualState() {
-        const { dispatch } = this.props;
-        dispatch({ type: 'UPDATE_ALL_GUESSES'          , payload: [] });
-        dispatch({ type: 'UPDATE_CORRECT_GUESSES'      , payload: [] });
-        dispatch({ type: 'UPDATE_CURRENT_GUESS'        , payload: [] });
-        dispatch({ type: 'UPDATE_DID_PLAYER1_WIN'      , payload: null });
-        dispatch({ type: 'UPDATE_DID_YOU_WIN'          , payload: null });
-        dispatch({ type: 'UPDATE_IS_GAME_OVER'         , payload: false });
-        dispatch({ type: 'UPDATE_LETTER'               , payload: [] });
-        dispatch({ type: 'UPDATE_STRIKE'               , payload: 0 });
-        dispatch({ type: 'UPDATE_PLAYER2_STRIKE'       , payload: 0 });
-        dispatch({ type: 'UPDATE_TURN'                 , payload: true});
-        dispatch({ type: 'UPDATE_PLAYER1_TURN'         , payload: true});
-        dispatch({ type: 'UPDATE_PLAYER2_WRONG_GUESSES', payload: 6});
-        dispatch({ type: 'UPDATE_WRONG_GUESSES_LEFT'   , payload: 6 });
-        dispatch({ type: 'UPDATE_WHOS_TURN_IS_IT'      , payload: null });
-      }
 
     render() {
         const { currentWord, didPlayer1Win, didYouWin, isItTwoPlayer, player2Strike, strike, whoIsPlayer } = this.props;
@@ -157,6 +212,26 @@ class SinglePlayerVsAiReducer extends Component {
                                         <button className="btn" onClick={this.handleSinglePlayerSameCat}>SAME CATAGORY SINGLE PLAYER</button>
                                     </Link>
                                 </div>
+                                <div className="">
+                                <div className="dropdown">
+                                    <button className="dropbtn btn">SAME CATAGORY VS AI</button>
+                                    <div className="dropdown-content">
+                                    <Link to="/SinglePlayerVsAi">
+                                    <button className="btn" onClick={() => {this.handleEasyDifficulty();  this.sameCatagoryNewWord()}}>Easy</button>
+                                        </Link>
+                                        <Link to="/SinglePlayerVsAi">
+                                        <button className="btn" onClick={() => {this.handleMediumDifficulty(); this.sameCatagoryNewWord()}}>Medium</button>
+                                        </Link>
+                                        <Link to="/SinglePlayerVsAi">
+                                        <button className="btn" onClick={() => {this.handleHardDifficulty(); this.sameCatagoryNewWord()}}>Hard</button>
+                                        </Link>
+                                        <Link to="/SinglePlayerVsAi">
+                                        <button className="btn" onClick={() => {this.handleExpertDifficulty(); this.sameCatagoryNewWord()}}>Expert</button>
+                                        </Link>
+                                    </div>
+                 
+            </div>
+                                </div>
                             </div>
                             
                             <div className="col-xs-4">
@@ -176,6 +251,26 @@ class SinglePlayerVsAiReducer extends Component {
                                     <Link to="/GamePage">
                                         <button className="btn" onClick={this.handleSinglePlayerDiffCat}>NEW CATAGORY SINGLE PLAYER</button>
                                     </Link>
+                                </div>
+                                <div className="">
+                                <div className="dropdown">
+                                    <button className="dropbtn btn">NEW CATAGORY VS AI</button>
+                                    <div className="dropdown-content">
+                                    <Link to="/SinglePlayerVsAi">
+                                    <button className="btn" onClick={() => {this.handleEasyDifficulty; this.currentWord}}>Easy</button>
+                                        </Link>
+                                        <Link to="/SinglePlayerVsAi">
+                                        <button className="btn" onClick={() => {this.handleMediumDifficulty; this.currentWord}}>Medium</button>
+                                        </Link>
+                                        <Link to="/SinglePlayerVsAi">
+                                        <button className="btn" onClick={() => {this.handleHardDifficulty; this.currentWord}}>Hard</button>
+                                        </Link>
+                                        <Link to="/SinglePlayerVsAi">
+                                        <button className="btn" onClick={() => {this.handleExpertDifficulty; this.currentWord}}>Expert</button>
+                                        </Link>
+                                    </div>
+                 
+            </div>
                                 </div>
                             </div>
                         </div>

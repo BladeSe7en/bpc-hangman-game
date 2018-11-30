@@ -10,12 +10,12 @@ class TwoPlayer extends Component {
     }
 
     returnToMainPage(){
-      const { dispatch, initalstate } = this.props;
-      dispatch({ type: 'RETURN_INITAL_STATE', payload: initalstate });
+      const { dispatch } = this.props;
+      dispatch({ type: 'RETURN_INITAL_STATE' });
   }
 
     render() {
-      const { strike, allGuesses, player2Strike, toggleAlert } = this.props;
+      const { strike, allGuesses, player2Strike, toggleAlert, wrongGuessesLeft, player2WrongGuesses } = this.props;
       if (toggleAlert === true) {
         return <Redirect push to="/" />;
       }
@@ -42,7 +42,7 @@ class TwoPlayer extends Component {
                         {img}
                     </div>
                     <div className='guesses-left-1p'>
-              <h1>Player 1 Strikes Left: {this.props.wrongGuessesLeft}</h1>
+              <h1>Player 1 Strikes Left: {wrongGuessesLeft}</h1>
              </div>
                 </div>
                 <div className="col-md-6">
@@ -50,7 +50,7 @@ class TwoPlayer extends Component {
                         {imgRev}
                     </div>
                     <div className='guesses-left-2p'>
-              <h1>Player 2 Strikes Left: {this.props.player2WrongGuesses}</h1>
+              <h1>Player 2 Strikes Left: {player2WrongGuesses}</h1>
              </div>
                 </div>
              </div>
