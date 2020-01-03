@@ -1,26 +1,27 @@
-import React, { Component } from 'react';
-import { Link }             from 'react-router-dom';
+import React, { Component }  from 'react';
+import { Link }              from 'react-router-dom';
+import { Redirect }          from 'react-router';
 import { updateMutualState } from './ScorePageAction';
 var axios = require('axios');
 
 class ScorePage extends Component {
     constructor(props) {
         super(props);
-        this.currentWord                               = this.currentWord.bind(this);
-        this.handleAiDiffCat                           = this.handleAiDiffCat.bind(this);
-        this.handleAiSameCat                           = this.handleAiDiffCat.bind(this);
-        this.handleChange                              = this.handleChange.bind(this);
-        this.handleEasyDifficulty                      = this.handleEasyDifficulty.bind(this);
-        this.handleExpertDifficulty                    = this.handleExpertDifficulty.bind(this);
-        this.handleHardDifficulty                      = this.handleHardDifficulty.bind(this);
-        this.handleSinglePlayerDiffCat                 = this.handleSinglePlayerDiffCat.bind(this);
-        this.handleSinglePlayerSameCat                 = this.handleSinglePlayerSameCat.bind(this);
-        this.handleSingleVsAi                          = this.handleSingleVsAi.bind(this);
-        this.handleTwoPlayerDiffCat                    = this.handleTwoPlayerDiffCat.bind(this);
-        this.handleTwoPlayerSameCat                    = this.handleTwoPlayerSameCat.bind(this);
-        this.handleMediumDifficulty                    = this.handleMediumDifficulty.bind(this);
-        this.returnToMainPage                          = this.returnToMainPage.bind(this);
-        this.sameCatagoryNewWord                       = this.sameCatagoryNewWord.bind(this);
+        this.currentWord               = this.currentWord.bind(this);
+        this.handleAiDiffCat           = this.handleAiDiffCat.bind(this);
+        this.handleAiSameCat           = this.handleAiDiffCat.bind(this);
+        this.handleChange              = this.handleChange.bind(this);
+        this.handleEasyDifficulty      = this.handleEasyDifficulty.bind(this);
+        this.handleExpertDifficulty    = this.handleExpertDifficulty.bind(this);
+        this.handleHardDifficulty      = this.handleHardDifficulty.bind(this);
+        this.handleSinglePlayerDiffCat = this.handleSinglePlayerDiffCat.bind(this);
+        this.handleSinglePlayerSameCat = this.handleSinglePlayerSameCat.bind(this);
+        this.handleSingleVsAi          = this.handleSingleVsAi.bind(this);
+        this.handleTwoPlayerDiffCat    = this.handleTwoPlayerDiffCat.bind(this);
+        this.handleTwoPlayerSameCat    = this.handleTwoPlayerSameCat.bind(this);
+        this.handleMediumDifficulty    = this.handleMediumDifficulty.bind(this);
+        this.returnToMainPage          = this.returnToMainPage.bind(this);
+        this.sameCatagoryNewWord       = this.sameCatagoryNewWord.bind(this);
     }
     
     currentWord() {
@@ -159,138 +160,175 @@ class ScorePage extends Component {
 
     render() {
         const { currentWord, didPlayer1Win, didYouWin, isItTwoPlayer, player2Strike, strike, whoIsPlayer } = this.props;
-        var img = (<img id={`hangman-${strike}`} src={`/pics/hangman-${strike}.png`} />);
-        var imgRev = (<img id={`hangman-${player2Strike}`} src={`/pics/hangman-${player2Strike}-reversed.png`} />);
+        var scoreImg = (<img id={`hangman-${strike}`} src={`/pics/hangman-${strike}.png`} style={{height: '48vh'}} />);
+        var scoreImgRev = (<img id={`hangman-${player2Strike}`} src={`/pics/hangman-${player2Strike}-reversed.png`} style={{height: '48vh'}}/>);
         var message;
         var answer;
-        
+        var player;
         /*single player victory*/
-        if (didYouWin && !isItTwoPlayer) {
-            console.log('single player victory');
+        if (didPlayer1Win && !isItTwoPlayer) {
+            console.log('--single player victory--');
+            console.log('--whoIsPlayer--: ',whoIsPlayer)
+         
             message = 'Congratulations! You Won! Would You Like To Play Again?';
             answer  = `You guessed ${currentWord.join('')} correctly`;
         }
         /*single player defeat */
-        if (!didYouWin && !isItTwoPlayer) {
-            console.log('single player defeat');
+        if (!didPlayer1Win && !isItTwoPlayer) {
+            console.log('--single player defeat--');
+            console.log('--whoIsPlayer--: ',whoIsPlayer)
+        
             message = 'You Lost! Would You Like To Play Again?';
             answer  = `The Correct Word Was ${currentWord.join('')}`;
         }
         /*two player: player 1 wins */
         if (isItTwoPlayer && didPlayer1Win) {
-            console.log('player one  victory');
-            message = `Congratulations ${whoIsPlayer}! Would You Like To Play Again?`;
+            console.log('--player one victory--');
+            console.log('--whoIsPlayer--: ',whoIsPlayer)
+            console.log('--strike--: ',strike)
+            console.log('--player2Strike--: ',player2Strike)
+            if (whoIsPlayer === ' Player One ') {
+                console.log('-------')
+                player = ' Player Two '
+            }
+            if (whoIsPlayer === ' Player Two ') {
+                console.log('1-------')
+                player = ' Player One '
+            }
+            message = `Congratulations ${player}! Would You Like To Play Again?`;
             answer  = `You guessed ${currentWord.join('')} correctly`;
+            if (player2Strike === 6) {
+                answer = 'Player TWO ran out of chances.'
+            }
+            
         }
          /*two player victory for either player one or player two */
          if (isItTwoPlayer && !didPlayer1Win) {
             console.log('player two  victory');
-            message = `Congratulations ${whoIsPlayer}! Would You Like To Play Again?`;
+            console.log('whoIsPlayer: ',whoIsPlayer)
+            console.log('-2-strike--: ',strike)
+            console.log('-2-player2Strike--: ',player2Strike)
+            if (whoIsPlayer === ' Player One ') {
+                player = ' PlayerTwo '
+            }
+            if (whoIsPlayer === ' Player Two ') {
+                player = ' Player One '
+            }
+            message = `Congratulations ${player}! Would You Like To Play Again?`;
             answer  = `You guessed ${currentWord.join('')} correctly`;
+            if (strike === 6) {
+                answer = 'Player ONE ran out of chances.'
+            }
+           
         }
-       
-            return (
-                <div className='scoreHeader'>
-                    <Link to="/">
+
+        if (currentWord.length == 0)
+            return <Redirect push to="/" />;
+
+        return (
+            <div className='scoreHeader'>
+                <Link to="/">
                     <button className="btn" onClick={this.returnToMainPage}>Main Page</button>
-                    </Link>
-                    <div>
-                        <h1>{message}</h1>
-                    </div>
-                    <div className="container">
-                        <div className="row">
+                </Link>
+                <div>
+                    <h1>{message}</h1>
+                </div>
+                <div className="score-container">
+                    <div className="row">
 
-                            <div className="col-xs-4">
-                                <div className="">
-                                    <Link to="/TwoPlayer">
-                                        <button className="btn" onClick={this.handleTwoPlayerSameCat}>SAME CATAGORY TWO PLAYER</button>
-                                    </Link>
-                                </div>
+                        <div className="col-xs-4">
+                            <div className="">
+                                <Link to="/TwoPlayer">
+                                    <button className="btn" onClick={this.handleTwoPlayerSameCat}>SAME CATAGORY TWO PLAYER</button>
+                                </Link>
+                            </div>
 
-                                <div className="">
-                                    <Link to="/GamePage">
-                                        <button className="btn" onClick={this.handleSinglePlayerSameCat}>SAME CATAGORY SINGLE PLAYER</button>
-                                    </Link>
-                                </div>
-                                <div className="">
+                            <div className="">
+                                <Link to="/GamePage">
+                                    <button className="btn" onClick={this.handleSinglePlayerSameCat}>SAME CATAGORY SINGLE PLAYER</button>
+                                </Link>
+                            </div>
+                            <div className="">
                                 <div className="dropdown">
                                     <button className="dropbtn btn">SAME CATAGORY VS AI</button>
                                     <div className="dropdown-content">
-                                    <Link to="/SinglePlayerVsAi">
-                                    <button className="btn" onClick={() => {this.handleEasyDifficulty();  this.sameCatagoryNewWord()}}>Easy</button>
+                                        <Link to="/SinglePlayerVsAi">
+                                            <button className="btn" onClick={() => { this.handleEasyDifficulty(); this.sameCatagoryNewWord() }}>Easy</button>
                                         </Link>
                                         <Link to="/SinglePlayerVsAi">
-                                        <button className="btn" onClick={() => {this.handleMediumDifficulty(); this.sameCatagoryNewWord()}}>Medium</button>
+                                            <button className="btn" onClick={() => { this.handleMediumDifficulty(); this.sameCatagoryNewWord() }}>Medium</button>
                                         </Link>
                                         <Link to="/SinglePlayerVsAi">
-                                        <button className="btn" onClick={() => {this.handleHardDifficulty(); this.sameCatagoryNewWord()}}>Hard</button>
+                                            <button className="btn" onClick={() => { this.handleHardDifficulty(); this.sameCatagoryNewWord() }}>Hard</button>
                                         </Link>
                                         <Link to="/SinglePlayerVsAi">
-                                        <button className="btn" onClick={() => {this.handleExpertDifficulty(); this.sameCatagoryNewWord()}}>Expert</button>
+                                            <button className="btn" onClick={() => { this.handleExpertDifficulty(); this.sameCatagoryNewWord() }}>Expert</button>
                                         </Link>
                                     </div>
-                 
-            </div>
-                                </div>
-                            </div>
-                            
-                            <div className="col-xs-4">
-                                <input
-                                    className="catagory"
-                                    placeholder="new catagory"
-                                    onChange={this.handleChange} />
-                            </div>
-                            <div className="col-xs-4">
-                                <div className="">
-                                    <Link to="/TwoPlayer">
-                                        <button className="btn" onClick={this.handleTwoPlayerDiffCat}>NEW CATAGORY TWO PLAYER</button>
-                                    </Link>
-                                </div>
 
-                                <div className="">
-                                    <Link to="/GamePage">
-                                        <button className="btn" onClick={this.handleSinglePlayerDiffCat}>NEW CATAGORY SINGLE PLAYER</button>
-                                    </Link>
-                                </div>
-                                <div className="">
-                                <div className="dropdown">
-                                    <button className="dropbtn btn">NEW CATAGORY VS AI</button>
-                                    <div className="dropdown-content">
-                                    <Link to="/SinglePlayerVsAi">
-                                    <button className="btn" onClick={() => {this.handleEasyDifficulty; this.currentWord}}>Easy</button>
-                                        </Link>
-                                        <Link to="/SinglePlayerVsAi">
-                                        <button className="btn" onClick={() => {this.handleMediumDifficulty; this.currentWord}}>Medium</button>
-                                        </Link>
-                                        <Link to="/SinglePlayerVsAi">
-                                        <button className="btn" onClick={() => {this.handleHardDifficulty; this.currentWord}}>Hard</button>
-                                        </Link>
-                                        <Link to="/SinglePlayerVsAi">
-                                        <button className="btn" onClick={() => {this.handleExpertDifficulty; this.currentWord}}>Expert</button>
-                                        </Link>
-                                    </div>
-                 
-            </div>
                                 </div>
                             </div>
                         </div>
 
+                        <div className="col-xs-4">
+                            <input
+                                className="catagory"
+                                placeholder="new catagory"
+                                onChange={this.handleChange} />
+                        </div>
+                        <div className="col-xs-4">
+                            <div className="">
+                                <Link to="/TwoPlayer">
+                                    <button className="btn" onClick={this.handleTwoPlayerDiffCat}>NEW CATAGORY TWO PLAYER</button>
+                                </Link>
+                            </div>
+
+                            <div className="">
+                                <Link to="/GamePage">
+                                    <button className="btn" onClick={this.handleSinglePlayerDiffCat}>NEW CATAGORY SINGLE PLAYER</button>
+                                </Link>
+                            </div>
+
+                            <div className="">
+                                <div className="dropdown">
+                                    <button className="dropbtn btn">NEW CATAGORY VS AI</button>
+                                    <div className="dropdown-content">
+                                        <Link to="/SinglePlayerVsAi">
+                                            <button className="btn" onClick={() => { this.handleEasyDifficulty; this.currentWord }}>Easy</button>
+                                        </Link>
+                                        <Link to="/SinglePlayerVsAi">
+                                            <button className="btn" onClick={() => { this.handleMediumDifficulty; this.currentWord }}>Medium</button>
+                                        </Link>
+                                        <Link to="/SinglePlayerVsAi">
+                                            <button className="btn" onClick={() => { this.handleHardDifficulty; this.currentWord }}>Hard</button>
+                                        </Link>
+                                        <Link to="/SinglePlayerVsAi">
+                                            <button className="btn" onClick={() => { this.handleExpertDifficulty; this.currentWord }}>Expert</button>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                    <h3>{answer}</h3>
-                    <div className='hangman-game-over' 
-                    /* for two player, shows player one's gallows */
-                        style={!isItTwoPlayer ? { display: 'block' } : { display: 'none' }}>
-                        {img}
+                </div>
+                <h3>{answer}</h3>
+                <div className='score-footer'>
+                    <div className='hangman-game-over'
+                        /* for two player, shows player one's gallows */
+                        style={!isItTwoPlayer ? { display: 'block', height: '50vh' } : { display: 'none' }}>
+                        {scoreImg}
                     </div>
-                    <div className='hangman-game-over' 
-                    /* for two player, shows player two's gallows */
-                        style={isItTwoPlayer && !didPlayer1Win ? { display: 'block' } : { display: 'none' }}>
-                        {imgRev}
+                    <div className='hangman-game-over'
+                        /* for two player, shows player two's gallows */
+                        style={isItTwoPlayer && !didPlayer1Win ? { display: 'block', height: '50vh' } : { display: 'none' }}>
+                        {scoreImgRev}
                     </div>
                     <div className='leaderboard'>
                     </div>
                 </div>
-            )
-        }
+            </div>
+        )
+    }
 }
 export default ScorePage;

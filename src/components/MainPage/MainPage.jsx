@@ -9,17 +9,17 @@ var axios = require('axios');
 class MainPage extends Component {
   constructor(props) {
     super(props);
-    this.currentWord             = this.currentWord.bind(this);
-    this.enter                   = this.enter.bind(this);
-    this.handleChange            = this.handleChange.bind(this);
-    this.handleClick             = this.handleClick.bind(this);
-    this.handleClickPlayerTwo    = this.handleClickPlayerTwo.bind(this);
-    this.handleAlertClick        = this.handleAlertClick.bind(this);
-    this.handleEasyDifficulty    = this.handleEasyDifficulty.bind(this);
+    this.currentWord             = this.currentWord           .bind(this);
+    this.enter                   = this.enter                 .bind(this);
+    this.handleChange            = this.handleChange          .bind(this);
+    this.handleClick             = this.handleClick           .bind(this);
+    this.handleClickPlayerTwo    = this.handleClickPlayerTwo  .bind(this);
+    this.handleAlertClick        = this.handleAlertClick      .bind(this);
+    this.handleEasyDifficulty    = this.handleEasyDifficulty  .bind(this);
     this.handleMediumDifficulty  = this.handleMediumDifficulty.bind(this);
-    this.handleHardDifficulty    = this.handleHardDifficulty.bind(this);
+    this.handleHardDifficulty    = this.handleHardDifficulty  .bind(this);
     this.handleExpertDifficulty  = this.handleExpertDifficulty.bind(this);
-    this.handleSingleVsAi        = this.handleSingleVsAi.bind(this);
+    this.handleSingleVsAi        = this.handleSingleVsAi      .bind(this);
 
 
   }

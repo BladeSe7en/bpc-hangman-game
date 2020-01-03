@@ -19,11 +19,11 @@ class TwoPlayer extends Component {
       if (toggleAlert === true) {
         return <Redirect push to="/" />;
       }
-        var img = (<img id={`hangman-${strike}`} src={`/pics/hangman-${strike}.png`} />);
-        var imgRev = (<img id={`hangman-${player2Strike}`} src={`/pics/hangman-${player2Strike}-reversed.png`} />);
+        var img = (<img id={`hangman-${strike}`} src={`/pics/hangman-${strike}.png`} style={{width: '48vw'}}/>);
+        var imgRev = (<img id={`hangman-${player2Strike}`} src={`/pics/hangman-${player2Strike}-reversed.png`} style={{width: '48vw'}} />);
          
          return (
-           <div>
+           <div className='p2-container'> 
             <Link to="/">
             <button className="btn" onClick={this.returnToMainPage}>Main Page</button>
             </Link>

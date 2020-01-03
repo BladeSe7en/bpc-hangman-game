@@ -44,24 +44,71 @@ const initalstate = {
           }
       }
       case 'UPDATE_CORRECT_GUESSES':
+          console.log('payload.correctGuesses: ',payload.correctGuesses)
+          console.log('payload.setWord in action: ',payload.setWord)
+          console.log('payload.setWord.length: ',payload.setWord.length)
+          console.log('payload.correctGuesses: ',payload.correctGuesses)
+          console.log('payload.correctGuesses.length: ',payload.correctGuesses.length)
+          console.log('--4')
+          var over = payload.isGameOver;
+          var didP1Win = payload.didPlayer1Win;
+          var uWin = payload.didYouWin;
+          var vsAi = payload.isItSVAi;
+          var youBeatAi = payload.didYouBeatAi;
+          if (payload.setWord.length === payload.correctGuesses.length) {
+              over = true;
+              if (!payload.isItTwoPlayer) {
+                  console.log('single player')
+                  didP1Win = true;
+              }
+              else if (payload.isItTwoPlayer) {
+                console.log('two player reducer')
+                uWin = null;
+                if (payload.player1Turn) {
+                  console.log('player one wins')
+                  didP1Win = true;
+                } else {
+                  console.log('player two wins')
+                  didP1Win = false;
+                }
+              }
+              else if (payload.isItSVAi) {
+                console.log('vs ai')
+                if (!payload.isItRobotsTurn) {
+                  console.log('you beat ai')
+                  youBeatAi = true;
+                } else {
+                  console.log('ai won')
+                  youBeatAi = false
+                }
+              }
+
+          }
+
       return {
           ...state,
-          correctGuesses: payload
+          ...payload,
+          isGameOver: over,
+          didPlayer1Win: didP1Win,
+          didYouWin: uWin,
+          isItSVAi: vsAi,
+          didYouBeatAi: youBeatAi
+
       }
       case 'PLAYER1_WIN':
         return {
             ...state,
-            didPlayer1Win: payload,
+            ...payload,
         }
       case 'YOU_WIN':
       return {
           ...state,
-          didYouWin: payload
+          ...payload
       }
       case 'GAME_OVER':
       return {
           ...state,
-          isGameOver: payload
+          ...payload
       }
       case 'PLAYER2_WRONG':
       return {
@@ -71,7 +118,7 @@ const initalstate = {
       case 'WHOS_PLAYER':
       return {
           ...state,
-          whoIsPlayer: payload
+          ...payload
       }
       case 'ON_CHANGE': {
         return {
@@ -80,9 +127,20 @@ const initalstate = {
         }
     }
     case 'ROBOT_IS_RIGHT': {
+        let gameOver = payload.isGameOver;
+        let youWin = payload.didPlayer1Win;
+        console.log('payload.set: ',payload.set)
+        console.log('payload.set.length: ',payload.set.length)
+        console.log('correctGuesses: ',payload.correctGuesses)
+        console.log('payload.correctGuesses.length: ',payload.correctGuesses.length)
+        if (payload.set.length === payload.correctGuesses.length) {
+            gameOver = true;
+        }
         return {
             ...state,
-            ...payload
+            ...payload,
+            isGameOver: gameOver,
+            didPlayer1Win: youWin
         }
     }
     case 'SP_WRONG': {
@@ -94,7 +152,7 @@ const initalstate = {
     case 'P1_TURN': {
         return {
             ...state,
-            player1Turn: payload,
+            ...payload,
             currentGuess: ''
         }
     }

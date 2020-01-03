@@ -13,3 +13,15 @@ function mapStoreToProps(store){
 }
 
 export default connect(mapStoreToProps)(TwoPlayerPage);
+
+function smallest(n) {
+    console.log(n);
+    let x = -Infinity;
+    let ans = [];
+    for ( let i = 0; i < n.length; i++ ){
+      if ( n[0] === 0 ) {
+      ans = n.slice(i);
+      console.log('this is ans', ans);
+      }
+    }
+};
