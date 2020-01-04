@@ -152,6 +152,7 @@ class Word extends Component {
    
   }
 
+  
   robotWordLogic(allG, currentG) {
     this.forceUpdate()
     const { allGuesses, 
