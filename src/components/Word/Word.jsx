@@ -175,14 +175,14 @@ class Word extends Component {
     
     const newCorrectGuesses = [...correctGuesses];
     const newAllGuesses     = [...allGuesses];
-    
+
     console.log('newCorrectGuesses: ',newCorrectGuesses)
     console.log('newAllGuesses: ',newAllGuesses)
     if (currentWord.includes(currentGuess)) {
       newCorrectGuesses.push(currentGuess)
     }
     newAllGuesses.push(currentGuess)
-
+//console.log('this is a test')
     const alpha               = 'abcdefghijklmnopqrstuvwxyz';
     const robotCorrectSet     = [...new Set(correctGuesses)].join('|');
     const robotWordSet        = [...new Set(currentWord)].join('|');
