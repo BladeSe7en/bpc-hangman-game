@@ -152,7 +152,6 @@ class Word extends Component {
    
   }
 
-  
   robotWordLogic(allG, currentG) {
     this.forceUpdate()
     const { allGuesses, 
@@ -176,6 +175,7 @@ class Word extends Component {
     
     const newCorrectGuesses = [...correctGuesses];
     const newAllGuesses     = [...allGuesses];
+    
     console.log('newCorrectGuesses: ',newCorrectGuesses)
     console.log('newAllGuesses: ',newAllGuesses)
     if (currentWord.includes(currentGuess)) {
