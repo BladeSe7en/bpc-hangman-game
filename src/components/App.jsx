@@ -6,7 +6,7 @@ import {
 import MainPage         from './MainPage';
 import GamePage         from './GamePage';
 import ScorePage        from './ScorePage';
-import Bob from './Bob';
+import Bob              from './Bob';
 import TwoPlayer        from './TwoPlayerPage';
 
 class App extends Component {
