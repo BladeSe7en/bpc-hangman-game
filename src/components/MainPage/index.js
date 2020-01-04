@@ -6,7 +6,7 @@ function mapStoreToProps(store) {
         catagory          : store.MainPage.catagory,
         toggleAlert       : store.MainPage.toggleAlert,
         aiDifficulty      : store.MainPage.aiDifficulty,
-        isItSVAi           : store.MainPage.isItSVAi,
+        isItSVAi          : store.MainPage.isItSVAi,
 
     };
 }

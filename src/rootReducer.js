@@ -2,7 +2,7 @@ import { combineReducers }     from 'redux';
 import MainPageReducer         from './components/MainPage/MainPaigeReducer';
 import GamePageReducer         from './components/GamePage/GamePageReducer';
 import ScorePageReducer        from './components/ScorePage/ScorePageReducer';
-import SinglePlayerVsAiReducer from './components/singlePlayerVsAi/SinglePlayerVsAiReducer';
+import SinglePlayerVsAiReducer from './components/SinglePlayerVsAi/SinglePlayerVsAiReducer';
 import WordReducer             from './components/Word/WordReducer';
 import TwoPlayerReducer        from './components/TwoPlayerPage/TwoPlayerPage.Reducer';
 
