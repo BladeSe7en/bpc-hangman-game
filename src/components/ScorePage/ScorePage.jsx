@@ -7,21 +7,21 @@ var axios = require('axios');
 class ScorePage extends Component {
     constructor(props) {
         super(props);
-        this.currentWord               = this.currentWord.bind(this);
-        this.handleAiDiffCat           = this.handleAiDiffCat.bind(this);
-        this.handleAiSameCat           = this.handleAiDiffCat.bind(this);
-        this.handleChange              = this.handleChange.bind(this);
-        this.handleEasyDifficulty      = this.handleEasyDifficulty.bind(this);
-        this.handleExpertDifficulty    = this.handleExpertDifficulty.bind(this);
-        this.handleHardDifficulty      = this.handleHardDifficulty.bind(this);
+        this.currentWord               = this.currentWord              .bind(this);
+        this.handleAiDiffCat           = this.handleAiDiffCat          .bind(this);
+        this.handleAiSameCat           = this.handleAiDiffCat          .bind(this);
+        this.handleChange              = this.handleChange             .bind(this);
+        this.handleEasyDifficulty      = this.handleEasyDifficulty     .bind(this);
+        this.handleExpertDifficulty    = this.handleExpertDifficulty   .bind(this);
+        this.handleHardDifficulty      = this.handleHardDifficulty     .bind(this);
         this.handleSinglePlayerDiffCat = this.handleSinglePlayerDiffCat.bind(this);
         this.handleSinglePlayerSameCat = this.handleSinglePlayerSameCat.bind(this);
-        this.handleSingleVsAi          = this.handleSingleVsAi.bind(this);
-        this.handleTwoPlayerDiffCat    = this.handleTwoPlayerDiffCat.bind(this);
-        this.handleTwoPlayerSameCat    = this.handleTwoPlayerSameCat.bind(this);
-        this.handleMediumDifficulty    = this.handleMediumDifficulty.bind(this);
-        this.returnToMainPage          = this.returnToMainPage.bind(this);
-        this.sameCatagoryNewWord       = this.sameCatagoryNewWord.bind(this);
+        this.handleSingleVsAi          = this.handleSingleVsAi         .bind(this);
+        this.handleTwoPlayerDiffCat    = this.handleTwoPlayerDiffCat   .bind(this);
+        this.handleTwoPlayerSameCat    = this.handleTwoPlayerSameCat   .bind(this);
+        this.handleMediumDifficulty    = this.handleMediumDifficulty   .bind(this);
+        this.returnToMainPage          = this.returnToMainPage         .bind(this);
+        this.sameCatagoryNewWord       = this.sameCatagoryNewWord      .bind(this);
     }
     
     currentWord() {
