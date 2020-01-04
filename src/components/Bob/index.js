@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import SinglePlayerVsAi from './SinglePlayerVsAi';
+import Bob from './Bob';
 
 function mapStoreToProps(store){
     return {
@@ -13,4 +13,4 @@ function mapStoreToProps(store){
     };
 }
 
-export default connect(mapStoreToProps)(SinglePlayerVsAi);
+export default connect(mapStoreToProps)(Bob);

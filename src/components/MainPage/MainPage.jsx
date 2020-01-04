@@ -129,16 +129,16 @@ class MainPage extends Component {
                 <div className="dropdown">
               <button className="dropbtn btn">Single Player VS AI</button>
               <div className="dropdown-content">
-              <Link to="/SinglePlayerVsAi">
+              <Link to="/Bob">
               <button className="btn" onClick={this.handleEasyDifficulty}>Easy</button>
                 </Link>
-                <Link to="/SinglePlayerVsAi">
+                <Link to="/Bob">
                 <button className="btn" onClick={this.handleMediumDifficulty}>Medium</button>
                 </Link>
-                <Link to="/SinglePlayerVsAi">
+                <Link to="/Bob">
                 <button className="btn" onClick={this.handleHardDifficulty}>Hard</button>
                 </Link>
-                <Link to="/SinglePlayerVsAi">
+                <Link to="/Bob">
                 <button className="btn" onClick={this.handleExpertDifficulty}>Expert</button>
                 </Link>
               </div>

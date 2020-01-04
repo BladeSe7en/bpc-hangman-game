@@ -252,16 +252,16 @@ class ScorePage extends Component {
                                 <div className="dropdown">
                                     <button className="dropbtn btn">SAME CATAGORY VS AI</button>
                                     <div className="dropdown-content">
-                                        <Link to="/SinglePlayerVsAi">
+                                        <Link to="/Bob">
                                             <button className="btn" onClick={() => { this.handleEasyDifficulty(); this.sameCatagoryNewWord() }}>Easy</button>
                                         </Link>
-                                        <Link to="/SinglePlayerVsAi">
+                                        <Link to="/Bob">
                                             <button className="btn" onClick={() => { this.handleMediumDifficulty(); this.sameCatagoryNewWord() }}>Medium</button>
                                         </Link>
-                                        <Link to="/SinglePlayerVsAi">
+                                        <Link to="/Bob">
                                             <button className="btn" onClick={() => { this.handleHardDifficulty(); this.sameCatagoryNewWord() }}>Hard</button>
                                         </Link>
-                                        <Link to="/SinglePlayerVsAi">
+                                        <Link to="/Bob">
                                             <button className="btn" onClick={() => { this.handleExpertDifficulty(); this.sameCatagoryNewWord() }}>Expert</button>
                                         </Link>
                                     </div>
@@ -293,16 +293,16 @@ class ScorePage extends Component {
                                 <div className="dropdown">
                                     <button className="dropbtn btn">NEW CATAGORY VS AI</button>
                                     <div className="dropdown-content">
-                                        <Link to="/SinglePlayerVsAi">
+                                        <Link to="/Bob">
                                             <button className="btn" onClick={() => { this.handleEasyDifficulty; this.currentWord }}>Easy</button>
                                         </Link>
-                                        <Link to="/SinglePlayerVsAi">
+                                        <Link to="/Bob">
                                             <button className="btn" onClick={() => { this.handleMediumDifficulty; this.currentWord }}>Medium</button>
                                         </Link>
-                                        <Link to="/SinglePlayerVsAi">
+                                        <Link to="/Bob">
                                             <button className="btn" onClick={() => { this.handleHardDifficulty; this.currentWord }}>Hard</button>
                                         </Link>
-                                        <Link to="/SinglePlayerVsAi">
+                                        <Link to="/Bob">
                                             <button className="btn" onClick={() => { this.handleExpertDifficulty; this.currentWord }}>Expert</button>
                                         </Link>
                                     </div>

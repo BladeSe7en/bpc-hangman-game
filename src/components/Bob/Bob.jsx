@@ -3,7 +3,7 @@ import { Redirect }         from 'react-router';
 import { Link }             from 'react-router-dom';
 import Word                 from '../Word';
 
-class SinglePlayerVsAi extends Component {
+class Bob extends Component {
     constructor(props) {
         super(props);
         this.returnToMainPage = this.returnToMainPage.bind(this);
@@ -61,7 +61,7 @@ class SinglePlayerVsAi extends Component {
          )
        }
 }
-export default SinglePlayerVsAi;
+export default Bob;
 
 
 

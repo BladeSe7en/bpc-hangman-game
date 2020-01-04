@@ -7,7 +7,7 @@ const initalstate = {
     wrongGuessesLeft     : 6,
   };
 
-  function SinglePlayerVsAiReducer(state = initalstate, action) {
+  function BobReducer(state = initalstate, action) {
   const { type, payload } = action;
   switch (type) {
   case 'RETURN_INITAL_STATE':
@@ -25,4 +25,4 @@ const initalstate = {
       }
     }
 }
-    export default SinglePlayerVsAiReducer;
+    export default BobReducer;
