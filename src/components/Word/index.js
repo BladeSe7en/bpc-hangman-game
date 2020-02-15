@@ -19,6 +19,7 @@ function mapStoreToProps(store){
         robotStrike        : store.Word    .robotStrike,
         robotWrongLeft     : store.Word    .robotWrongLeft,
         strike             : store.Word    .strike,
+        toggleAlert        : store.MainPage.toggleAlert,
         wrongGuessesLeft   : store.Word    .wrongGuessesLeft,
         whoIsPlayer        : store.Word    .whoIsPlayer
     };

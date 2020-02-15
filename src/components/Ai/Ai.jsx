@@ -17,9 +17,11 @@ class Ai extends Component {
 
   render() {
     const { strike, allGuesses, toggleAlert, wrongGuessesLeft, robotStrike, robotWrongLeft } = this.props;
-    if (toggleAlert === true) {
-      return <Redirect push to="/" />;
-    }
+    // if (toggleAlert === true) {
+    //   const { dispatch } = this.props;
+    //   dispatch({ type: 'RETURN_INITAL_STATE' });
+    //   return <Redirect push to="/" />;
+    // }
     var img = (<img id={`hangman-${strike}`} src={`/pics/hangman-${strike}.png`} />);
     var imgRev = (<img id={`hangman-${robotStrike}`} src={`/pics/hangman-${robotStrike}-reversed.png`} />);
 

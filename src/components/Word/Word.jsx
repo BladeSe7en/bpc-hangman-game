@@ -235,11 +235,18 @@ class Word extends Component {
       currentWord, 
       isGameOver, 
       isItTwoPlayer, 
-      player1Turn 
+      player1Turn,
+      toggleAlert 
     } = this.props
 
     if (isGameOver === true) {
       return <Redirect push to="/ScorePage" />;
+    }
+    if (toggleAlert === true) {
+      console.log('i am in the toggle alert if statement')
+      const { dispatch } = this.props;
+      dispatch({ type: 'RETURN_INITAL_STATE' });
+      return <Redirect push to="/" />;
     }
   
     if (isItTwoPlayer === true) {

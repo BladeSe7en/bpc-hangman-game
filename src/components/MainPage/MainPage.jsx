@@ -31,12 +31,8 @@ class MainPage extends Component {
     console.log('this is history: ', history)
     axios.get(`https://api.datamuse.com/words?topics=${topic}`)
       .then(response => {
-        var index = Math.floor(Math.random() * response.data.length);
-        console.log('this is index: ', index);
-        console.log('this is data: ', response.data[index]);
-        console.log('this is length: ', response.data.length);
         const { dispatch } = this.props;
-        dispatch({ type: 'UPDATE_CURRENT_WORD', payload: response.data[index].word.split('') });
+       // dispatch({ type: 'UPDATE_CURRENT_WORD', payload: response.data[index].word.split('') });
         dispatch({ type: 'UPDATE_DATA', payload: response.data });
       }
       )
