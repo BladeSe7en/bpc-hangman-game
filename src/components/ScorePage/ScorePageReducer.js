@@ -7,7 +7,7 @@ function GamePageReducer(state = initalstate, action) {
       default:
       return {
           ...state
-      }
+      };
   }
 }
 export default GamePageReducer;

@@ -4,7 +4,17 @@
     "jsx-quotes": [2, "prefer-single"],
     "react/jsx-curly-spacing": [2, "always"],
     "react/prefer-stateless-function": [0],
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "no-underscore-dangle": "off",
+    "indent": "off",
+    "key-spacing": "off",
+    "no-multi-spaces": "off",
+    "comma-spacing": "off",
+    "no-console": "off",
+    "no-case-declarations": "off",
+    "object-shorthand": "off",
+    "no-unused-expressions": "off",
+    "no-tabs": "off"
   },
   "env": {
     "jasmine": true,

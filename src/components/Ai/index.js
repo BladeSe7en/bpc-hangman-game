@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import Bob from './Bob';
+import Ai from './Ai';
 
-function mapStoreToProps(store){
+function mapStoreToProps(store) {
     return {
         allGuesses           : store.Word     .allGuesses,
         strike               : store.Word     .strike,
@@ -13,4 +13,4 @@ function mapStoreToProps(store){
     };
 }
 
-export default connect(mapStoreToProps)(Bob);
+export default connect(mapStoreToProps)(Ai);

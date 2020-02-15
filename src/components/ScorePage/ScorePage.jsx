@@ -23,6 +23,8 @@ class ScorePage extends Component {
         this.returnToMainPage          = this.returnToMainPage         .bind(this);
         this.sameCatagoryNewWord       = this.sameCatagoryNewWord      .bind(this);
     }
+
+  
     
     currentWord() {
         const { catagory, dispatch } = this.props;
@@ -222,8 +224,7 @@ class ScorePage extends Component {
            
         }
 
-        if (currentWord.length == 0)
-            return <Redirect push to="/" />;
+     
 
         return (
             <div className='scoreHeader'>
@@ -252,16 +253,16 @@ class ScorePage extends Component {
                                 <div className="dropdown">
                                     <button className="dropbtn btn">SAME CATAGORY VS AI</button>
                                     <div className="dropdown-content">
-                                        <Link to="/Bob">
+                                        <Link to="/Ai">
                                             <button className="btn" onClick={() => { this.handleEasyDifficulty(); this.sameCatagoryNewWord() }}>Easy</button>
                                         </Link>
-                                        <Link to="/Bob">
+                                        <Link to="/Ai">
                                             <button className="btn" onClick={() => { this.handleMediumDifficulty(); this.sameCatagoryNewWord() }}>Medium</button>
                                         </Link>
-                                        <Link to="/Bob">
+                                        <Link to="/Ai">
                                             <button className="btn" onClick={() => { this.handleHardDifficulty(); this.sameCatagoryNewWord() }}>Hard</button>
                                         </Link>
-                                        <Link to="/Bob">
+                                        <Link to="/Ai">
                                             <button className="btn" onClick={() => { this.handleExpertDifficulty(); this.sameCatagoryNewWord() }}>Expert</button>
                                         </Link>
                                     </div>
@@ -293,16 +294,16 @@ class ScorePage extends Component {
                                 <div className="dropdown">
                                     <button className="dropbtn btn">NEW CATAGORY VS AI</button>
                                     <div className="dropdown-content">
-                                        <Link to="/Bob">
+                                        <Link to="/Ai">
                                             <button className="btn" onClick={() => { this.handleEasyDifficulty; this.currentWord }}>Easy</button>
                                         </Link>
-                                        <Link to="/Bob">
+                                        <Link to="/Ai">
                                             <button className="btn" onClick={() => { this.handleMediumDifficulty; this.currentWord }}>Medium</button>
                                         </Link>
-                                        <Link to="/Bob">
+                                        <Link to="/Ai">
                                             <button className="btn" onClick={() => { this.handleHardDifficulty; this.currentWord }}>Hard</button>
                                         </Link>
-                                        <Link to="/Bob">
+                                        <Link to="/Ai">
                                             <button className="btn" onClick={() => { this.handleExpertDifficulty; this.currentWord }}>Expert</button>
                                         </Link>
                                     </div>

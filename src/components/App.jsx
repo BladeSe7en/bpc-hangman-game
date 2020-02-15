@@ -6,7 +6,7 @@ import {
 import MainPage         from './MainPage';
 import GamePage         from './GamePage';
 import ScorePage        from './ScorePage';
-import Bob              from './Bob';
+import Ai               from './Ai';
 import TwoPlayer        from './TwoPlayerPage';
 
 class App extends Component {
@@ -17,7 +17,7 @@ class App extends Component {
         <Route exact path='/'           component={MainPage} />
         <Route path='/GamePage'         component={GamePage} />
         <Route path='/ScorePage'        component={ScorePage} />
-        <Route path='/Bob' component={Bob} />
+        <Route path='/Ai'               component={Ai} />
         <Route path='/TwoPlayer'        component={TwoPlayer} />
         </div>
     </Router>

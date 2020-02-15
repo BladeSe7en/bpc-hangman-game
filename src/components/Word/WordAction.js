@@ -1,17 +1,17 @@
-export const onChange = (value) => {
+export const onChange = value => {
 	return {
 		type: 'ON_CHANGE',
 		payload: {
 			currentGuess: value
 		}
-	}
-}
+	};
+};
 export const updateGuesses = (allGuesses, currentGuess) => {
 	return {
 		type: 'UPDATE_GUESSES',
 		payload: allGuesses.concat(currentGuess)
-	}
-}
+	};
+};
 export const robotIsRight = (allGuesses, correctGuesses, robotRightSelection, setWord) => {
 	console.log('action-robotIsRight-allGuesses: ',allGuesses)
 	console.log('action-robotIsRight-correctGuesses: ',correctGuesses)
@@ -26,8 +26,8 @@ export const robotIsRight = (allGuesses, correctGuesses, robotRightSelection, se
 			set: setWord
         }
         
-	}
-}
+	};
+};
 export const robotIsWrong = (allGuesses, robotWrongLeft, robotStrike, isItRobotsTurn, robotWrongSelection) => {
 	console.log('action-robotIsWrong-allGuesses: ',allGuesses)
 	console.log('action-robotIsWrong-robotWrongLeft: ',robotWrongLeft)
@@ -42,8 +42,9 @@ export const robotIsWrong = (allGuesses, robotWrongLeft, robotStrike, isItRobots
             robotStrike: robotStrike + 1,
 			isItRobotsTurn: !isItRobotsTurn
         }
-	}
-}
+	};
+};
+
 export const updateCorrectGuesses = (correctGuesses, currentGuess, setWord) => {
 
 	// if (setWord === setCorrect && !isItTwoPlayer) {
@@ -81,16 +82,18 @@ export const updateCorrectGuesses = (correctGuesses, currentGuess, setWord) => {
 			correctGuesses: correctGuesses.concat(currentGuess),
 			setWord: setWord
         }
-	}
-}
+	};
+};
+
 export const robotsTurn = (isItRobotsTurn) => {
 	return {
 		type: 'ROBOTS_TURN',
 		payload: {
             isItRobotsTurn: !isItRobotsTurn
         }
-	}
-}
+	};
+};
+
 export const player2Wrong = (player2Strike, player2WrongGuesses) => {
 	return {
 		type: 'PLAYER2_WRONG',
@@ -98,8 +101,9 @@ export const player2Wrong = (player2Strike, player2WrongGuesses) => {
             player2Strike: player2Strike + 1,
             player2WrongGuesses: (+(player2WrongGuesses) - 1)
         }
-    }
-}
+    };
+};
+
 export const spWrong = (strike, wrongGuessesLeft) => {
 	return {
 		type: 'SP_WRONG',
@@ -107,53 +111,59 @@ export const spWrong = (strike, wrongGuessesLeft) => {
             strike: strike + 1,
             wrongGuessesLeft: (+(wrongGuessesLeft)-1)
         }
-    }
-}
+    };
+};
+
 export const p1Turn = (player1Turn) => {
 	return {
 		type: 'P1_TURN',
 		payload: {
             player1Turn: !player1Turn
         }
-    }
-}
+    };
+};
+
 export const whosPlayer = (payload) => {
 	return {
 		type: 'WHOS_PLAYER',
 		payload: {
             whoIsPlayer: payload
         }
-    }
-}
+    };
+};
+
 export const gameOver = (payload) => {
 	return {
 		type: 'GAME_OVER',
 		payload: {
             isGameOver: payload
         }
-    }
-}
+    };
+};
+
 export const player1Win = (payload) => {
 	return {
 		type: 'PLAYER1_WIN',
 		payload: {
             didPlayer1Win: payload
         }
-    }
-}
+    };
+};
+
 export const beatAi = (payload) => {
 	return {
 		type: 'BEAT_AI',
 		payload: {
             didYouBeatAi: payload
         }
-    }
-}
+    };
+};
+
 export const youWin = (payload) => {
 	return {
 		type: 'YOU_WIN',
 		payload: {
             didYouWin: payload
         }
-    }
-}
+    };
+};

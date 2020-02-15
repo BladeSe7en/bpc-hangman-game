@@ -24,26 +24,27 @@ class MainPage extends Component {
 
   }
 
- currentWord() {
-    const { catagory } = this.props;
+  currentWord() {
+    const { catagory, history } = this.props;
     var topic = catagory;
     console.log('this is topic ', topic);
+    console.log('this is history: ', history)
     axios.get(`https://api.datamuse.com/words?topics=${topic}`)
       .then(response => {
-        var index = Math.floor(Math.random() *  response.data.length);
-        console.log('this is index: '         , index);
-        console.log('this is data: '          , response.data[index]);
-        console.log('this is length: '        , response.data.length);
+        var index = Math.floor(Math.random() * response.data.length);
+        console.log('this is index: ', index);
+        console.log('this is data: ', response.data[index]);
+        console.log('this is length: ', response.data.length);
         const { dispatch } = this.props;
         dispatch({ type: 'UPDATE_CURRENT_WORD', payload: response.data[index].word.split('') });
-        dispatch({ type: 'UPDATE_DATA'        , payload: response.data });
-      } 
-    )
-    .catch((err) => {
-  console.log(err);
-  response.send(err);
-});
+        dispatch({ type: 'UPDATE_DATA', payload: response.data });
+      }
+      )
+      .catch((err) => {
+        console.error(err)
+      });
   }
+
 
   handleEasyDifficulty(){
     this.handleSingleVsAi();
@@ -108,7 +109,7 @@ class MainPage extends Component {
     }
     isThereCatagory() {
       const { catagory, dispatch } = this.props;
-      if( catagory === ''){
+      if( catagory === '' || catagory === undefined){
       dispatch({ type: 'TOGGLE_ALERT', payload: true});
       }
     }
@@ -129,23 +130,23 @@ class MainPage extends Component {
                 <div className="dropdown">
               <button className="dropbtn btn">Single Player VS AI</button>
               <div className="dropdown-content">
-              <Link to="/Bob">
+              <Link to="/Ai">
               <button className="btn" onClick={this.handleEasyDifficulty}>Easy</button>
                 </Link>
-                <Link to="/Bob">
+                <Link to="/Ai">
                 <button className="btn" onClick={this.handleMediumDifficulty}>Medium</button>
                 </Link>
-                <Link to="/Bob">
+                <Link to="/Ai">
                 <button className="btn" onClick={this.handleHardDifficulty}>Hard</button>
                 </Link>
-                <Link to="/Bob">
+                <Link to="/Ai">
                 <button className="btn" onClick={this.handleExpertDifficulty}>Expert</button>
                 </Link>
               </div>
                  
             </div>
                 </div>
-                <div className="">
+                <div>
                   <Link to="/GamePage">
                     <button className="btn" onClick={this.handleClick}>Single Player</button>
                   </Link>

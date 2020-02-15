@@ -20,11 +20,12 @@ import {
 class Word extends Component {
   constructor(props) {
     super(props);
-    this.enter = this.enter.bind(this);
+    this.enter        = this.enter       .bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.isGameOver   = this.isGameOver  .bind(this);
   }
+ 
 
   enter(e) {
     if (e.key == 'Enter') {
@@ -55,18 +56,31 @@ class Word extends Component {
     let correctGuesses2 = correctGuesses;
     this.isGameOver();
     console.log('test 1')
-    dispatch(updateGuesses(allGuesses, currentGuess));
+    if (allGuesses.includes(currentGuess)) {
+      alert('Letter has already been guessed.')
+    } else {
+      dispatch(updateGuesses(allGuesses, currentGuess));
+    }
     // checks if current guess is correct.
     if (currentWord.includes(currentGuess)) {
       console.log('test 2')
-      let setWord = [...new Set(currentWord)];
-      dispatch(updateCorrectGuesses(correctGuesses, currentGuess, setWord));
-      correctGuesses2 = correctGuesses.concat(currentGuess);
-      // checks if current guess is correct && if game mode is against AI
-      if (currentWord.includes(currentGuess) && isItSVAi) {
-        console.log('test 3')
-        this.robotWordLogic((allGuesses, currentGuess));
-        dispatch(robotsTurn(isItRobotsTurn));
+      if (allGuesses.includes(currentGuess)) {
+        alert('Letter has already been guessed.')
+      } else {
+        let setWord = [...new Set(currentWord)];
+        dispatch(updateCorrectGuesses(correctGuesses, currentGuess, setWord));
+        correctGuesses2 = correctGuesses.concat(currentGuess);
+        // checks if current guess is correct && if game mode is against AI
+        if (currentWord.includes(currentGuess) && isItSVAi) {
+          console.log('test 3')
+          if (allGuesses.includes(currentGuess)) {
+            alert('Letter has already been guessed.')
+          } else {
+            
+            this.robotWordLogic((allGuesses, currentGuess));
+            dispatch(robotsTurn(isItRobotsTurn));
+          }
+        }
       }
     } else {
       // two player mode. player 2 makes wrong guess
@@ -227,6 +241,7 @@ class Word extends Component {
     if (isGameOver === true) {
       return <Redirect push to="/ScorePage" />;
     }
+  
     if (isItTwoPlayer === true) {
       return (
         <div className="word-section row" >

@@ -7,7 +7,7 @@ const initalstate = {
       default:
       return {
           ...state
-      }
+      };
     }
 }
     export default TwoPlayerPageReducer;

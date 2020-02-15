@@ -7,22 +7,22 @@ const initalstate = {
     wrongGuessesLeft     : 6,
   };
 
-  function BobReducer(state = initalstate, action) {
+  function AiReducer(state = initalstate, action) {
   const { type, payload } = action;
   switch (type) {
   case 'RETURN_INITAL_STATE':
   return {
      ...initalstate
-  }
+  };
   case 'TOGGLE_ALERT':
   return {
       ...state,
       toggleAlert: payload
-  }
+  };
       default:
       return {
           ...state
-      }
+      };
     }
 }
-    export default BobReducer;
+    export default AiReducer;
