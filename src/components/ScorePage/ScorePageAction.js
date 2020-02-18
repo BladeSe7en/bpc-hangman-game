@@ -1,3 +1,3 @@
 export const updateMutualState = () => {
-    return { type: 'UPDATE_MUTUAL_STATE' };
+    return { type: 'RETURN_INITAL_STATE' };
 }

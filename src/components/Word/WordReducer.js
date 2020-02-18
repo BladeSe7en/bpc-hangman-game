@@ -23,18 +23,13 @@ const initalstate = {
        ...initalstate,
     };
 
-    case 'UPDATE_MUTUAL_STATE':
-        return {
-            ...initalstate
-        };
-
-      case 'UPDATE_CURRENT_GUESS':                   
+      case 'UPDATE_CURRENT_GUESS':
       return {
           ...state,
           currentGuess: payload
       };
 
-      case 'BEAT_AI':                   
+      case 'BEAT_AI':
       return {
           ...state,
           didYouBeatAi: payload
