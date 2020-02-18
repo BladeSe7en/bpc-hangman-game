@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Link }             from 'react-router-dom';
+import { Link, Redirect }             from 'react-router-dom';
 import {
   HashRouter as Router,
   Route
 } from 'react-router-dom';
 var axios = require('axios');
+
+import { updateDataAsync } from "./MainPageAction";
 
 class MainPage extends Component {
   constructor(props) {
@@ -13,6 +15,7 @@ class MainPage extends Component {
     this.enter                   = this.enter                 .bind(this);
     this.handleChange            = this.handleChange          .bind(this);
     this.handleClick             = this.handleClick           .bind(this);
+    this.handleClickAlternate    = this.handleClickAlternate  .bind(this);
     this.handleClickPlayerTwo    = this.handleClickPlayerTwo  .bind(this);
     this.handleAlertClick        = this.handleAlertClick      .bind(this);
     this.handleEasyDifficulty    = this.handleEasyDifficulty  .bind(this);
@@ -83,6 +86,16 @@ class MainPage extends Component {
     if (this.props.toggleAlert ===false){
     this.currentWord();
     }}
+  
+  handleClickAlternate() {
+    const { catagory, dispatch } = this.props;
+    // because redux thunk is in the project, we can use the then block 
+    // to do something after redux state is updated
+    dispatch(updateDataAsync(catagory)).then(() => {
+      console.log('Completed the full async redux bidniz');
+      return <Redirect to='GamePage' />
+    });
+  }
 
     handleClickPlayerTwo() {
       const { dispatch, toggleAlert } = this.props;
@@ -143,9 +156,10 @@ class MainPage extends Component {
             </div>
                 </div>
                 <div>
-                  <Link to="/GamePage">
+                  {/*<Link to="/GamePage">
                     <button className="btn" onClick={this.handleClick}>Single Player</button>
-                  </Link>
+                  </Link>*/}
+                  <button className="btn" onClick={this.handleClickAlternate}>Single Player</button>
                 </div>
                 <div className="">
                   <Link to="/TwoPlayer">
