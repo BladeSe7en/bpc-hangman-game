@@ -53,6 +53,15 @@ const initalstate = {
             currentWord: payload[index].word.split('')
         };
 
+        case 'UPDATE_DATA_NEW':
+            console.log('In UPDATE_DATA_NEW reducer case');
+            const wordIndex = Math.floor(Math.random() * payload.length);
+            return {
+                ...state,
+                data: payload,
+                currentWord: payload[wordIndex].word.split('')
+            }
+
         case 'UPDATE_IS_IT_TWO_PLAYER':
         return {
             ...state,
