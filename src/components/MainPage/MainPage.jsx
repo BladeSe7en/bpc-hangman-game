@@ -88,12 +88,17 @@ class MainPage extends Component {
     }}
   
   handleClickAlternate() {
-    const { catagory, dispatch } = this.props;
+    const { catagory, dispatch, toggleAlert } = this.props;
     // because redux thunk is in the project, we can use the then block 
-    // to do something after redux state is updated
+    // to do something after redux flow is complete
     dispatch(updateDataAsync(catagory)).then(() => {
-      console.log('Completed the full async redux bidniz');
-      return <Redirect to='GamePage' />
+      // can also use redirect in the render funciton instead of history.push
+      // as per https://tylermcginnis.com/react-router-programmatically-navigate/
+      console.log('Completed the full async redux business');
+      if (!toggleAlert) {
+        // only redirect if no toggle alert
+        this.props.history.push('/GamePage');
+      }
     });
   }
 

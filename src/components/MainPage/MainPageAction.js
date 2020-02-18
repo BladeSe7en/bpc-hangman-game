@@ -10,12 +10,9 @@ export const updateDataAsync = (category) => {
 				.then(response => {
 					console.log("Successfully fetched response with data: ", response.data);
 					if (response.data.length === 0) {
-						console.log('data is not defined')
-						// here I'm returning nothing to block any state changes or navigation, but you might 
-						// set some state for the UI to use to show a warning, or you could clear
-						// out the category search box, or set a message, etc.
-
-						return; // no change will be made to data store in this case
+						console.log('No similar words');
+						// no data, toggle alert
+						dispatch({ type: 'TOGGLE_ALERT', payload: true});
 					}
 					dispatch({ type: 'UPDATE_DATA_NEW', payload: response.data });
 					// alternate use of action creator
