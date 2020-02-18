@@ -8,7 +8,6 @@ function mapStoreToProps(store) {
         aiDifficulty      : store.MainPage.aiDifficulty,
         isItSVAi          : store.MainPage.isItSVAi,
         toggleAlert       : store.MainPage.toggleAlert
-
     };
 }
 
