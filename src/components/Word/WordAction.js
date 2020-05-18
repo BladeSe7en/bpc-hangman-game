@@ -95,6 +95,12 @@ export const robotsTurn = (isItRobotsTurn) => {
 };
 
 export const player2Wrong = (player2Strike, player2WrongGuesses) => {
+	console.log('----player2_wrong------')
+	console.log('player2Strike PERAM: ',player2Strike)
+	console.log('player2WrongGuesses PERAM: ',player2WrongGuesses)
+	console.log('player2Strike UPDATED: ',player2Strike)
+	console.log('player2WrongGuesses UPDATED: ', (+(player2WrongGuesses) - 1))
+	console.log('===================')
 	return {
 		type: 'PLAYER2_WRONG',
 		payload: {

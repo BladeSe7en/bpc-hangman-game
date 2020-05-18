@@ -108,6 +108,7 @@ class Word extends Component {
         console.log('test 5')
         console.log('am I getting here')
         this.isGameOver(strike, player2Strike + 1);
+        console.log('player2WrongGuesses before handler: ',player2WrongGuesses)
         dispatch(player2Wrong(player2Strike, player2WrongGuesses));
 
       } else {
