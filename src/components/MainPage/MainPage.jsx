@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect }             from 'react-router-dom';
+import { Link, Redirect }   from 'react-router-dom';
 import {
   HashRouter as Router,
   Route
@@ -23,8 +23,13 @@ class MainPage extends Component {
     this.handleHardDifficulty    = this.handleHardDifficulty  .bind(this);
     this.handleExpertDifficulty  = this.handleExpertDifficulty.bind(this);
     this.handleSingleVsAi        = this.handleSingleVsAi      .bind(this);
+  }
 
-
+  componentDidUpdate(prevProps, prevState) {
+   
+    console.log('updated mainPage.jsx')
+    console.log('this._input: ',this._input)
+    this._input.focus();
   }
 
   currentWord() {
@@ -181,17 +186,19 @@ class MainPage extends Component {
               <div className=''>
               <div className="col-md-9">
                 <input
+                  autoComplete="off"
+                  ref={a => (this._input = a)}
                   className="catagory"
                   value={this.props.catagory}
                   onChange={this.handleChange}
                   placeholder='Choose A Catagory' />
-              </div>
-                  <div className="">
+                </div>
+                <div className="">
                   <div className="alert"
-                  style={this.props.toggleAlert === true ? { display: 'block' } : { display: 'none' }}
+                    style={this.props.toggleAlert === true ? { display: 'block' } : { display: 'none' }}
                   >
-                  <h1>Please enter in a catagory before selecting Single or Two Player.</h1>
-                  <div 
+                    <h1>Please enter in a catagory before selecting Single or Two Player.</h1>
+                    <div 
                   className="closeBtn" 
                   onClick={this.handleAlertClick}>X
                   </div>

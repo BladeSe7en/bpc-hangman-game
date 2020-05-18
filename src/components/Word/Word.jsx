@@ -24,9 +24,28 @@ class Word extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.isGameOver   = this.isGameOver  .bind(this);
-  }
- 
+    this.focusP1      = this.focusP1     .bind(this);
+    this.focusP2      = this.focusP2     .bind(this);
 
+    this.p1 = React.createRef();
+    this.p2 = React.createRef();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const  {player1Turn } = this.props;
+    prevProps.player1Turn && prevProps.player1Turn !== player1Turn || !player1Turn ? this.focusP2() : this.focusP1();
+  }
+  
+  focusP1() {
+    this.p1.current.focus();
+    this.p2.current.blur();
+  }
+
+  focusP2() {
+    this.p2.current.focus();
+    this.p1.current.blur();
+  }
+  
   enter(e) {
     if (e.key == 'Enter') {
       this.handleSubmit();
@@ -256,8 +275,10 @@ class Word extends Component {
           <div className="col-md-3" style={player1Turn ? { display: 'block' } : { display: 'none' }}>
             <h1 className="enter-a-guess"></h1>
             <input id='guess player-1'
+              autoFocus={true}
+              ref={this.p1}
               type="string"
-              autoFocus
+              autoComplete="off"
               placeholder="Player 1 Guess"
               value={currentGuess}
               onChange={this.handleChange}
@@ -286,7 +307,10 @@ class Word extends Component {
           <div className="col-md-3" style={!player1Turn ? { display: 'block' } : { display: 'none' }}>
             <h1 className="enter-a-guess-player-2"></h1>
             <input id='guess'
+              autoFocus={true}
+              ref={this.p2}
               type="string"
+              autoComplete="off"
               placeholder="Player 2 Guess"
               value={currentGuess}
               onChange={this.handleChange}
@@ -301,6 +325,9 @@ class Word extends Component {
           <div className="word-section-sp">
             <h1 className="enter-a-guess"></h1>
             <input id='guess'
+              onFocus={this.handleFocus}
+              ref={c => (this._input = c)}
+              autoComplete="off"
               type="string"
               placeholder="Enter in a Guess"
               value={currentGuess}
